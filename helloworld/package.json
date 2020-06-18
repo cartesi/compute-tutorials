@@ -1,0 +1,32 @@
+{
+  "name": "@cartesi/descartes-tutorials-helloworld",
+  "version": "0.1.0",
+  "description": "HelloWorld Descartes DApp",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@cartesi/descartes-sdk": "../../descartes"
+  },
+  "devDependencies": {
+    "@truffle/contract": "^4.2.9",
+    "truffle": "^5.1.30"
+  },
+  "scripts": {
+    "build": "truffle compile",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cartesi-corp/descartes-tutorials.git"
+  },
+  "keywords": [
+    "cartesi"
+  ],
+  "author": "Milton Jonathan <milton.jonathan@cartesi.io>",
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/cartesi-corp/descartes-tutorials/issues"
+  },
+  "homepage": "https://github.com/cartesi-corp/descartes-tutorials#readme"
+}
