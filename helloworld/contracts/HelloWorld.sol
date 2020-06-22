@@ -11,11 +11,9 @@ contract HelloWorld {
     DescartesInterface descartes;
 
     uint256 finalTime = 1e13;
-    bytes32 templateHash = 0x375fb938dcff562818779bc0dc4689a713a61d89659c8a9274a53551c7bc464c;
-    uint64 outputPosition = 0x2700;
+    bytes32 templateHash = 0x1697a8f2587ec67aafbfee38f8287c3ca5ce8b2822291ba9cfbfa6ffb37fdb53;
+    uint64 outputPosition = 0x9000000000000000;
     uint256 roundDuration = 45;
-
-    // output drive
     DescartesInterface.Drive[] drives;
 
     constructor(address descartesAddress) public {
@@ -23,15 +21,6 @@ contract HelloWorld {
     }
 
     function instantiate(address claimer, address challenger) public returns (uint256) {
-
-        drives.push(DescartesInterface.Drive(
-            0x00,    // position
-            0x110,   // loggerLog2Size
-            0,       // directValueOrLoggerRoot
-            claimer, // TODO: claimer
-            false,   // needsProvider
-            false    // needsLogger
-        ));
 
         return descartes.instantiate(
             finalTime,
@@ -44,8 +33,7 @@ contract HelloWorld {
         );
     }
 
-    function getResult(uint256 index) public view returns(string memory) {
-        // TODO: use Descartes.getResult(index)
-        return defaultValue;
+    function getResult(uint256 index) public view returns (bool, bool, address, bytes32) {
+        return descartes.getResult(index);
     }
 }
