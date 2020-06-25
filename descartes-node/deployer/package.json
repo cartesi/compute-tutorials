@@ -1,7 +1,7 @@
 {
-  "name": "@cartesi/descartes-tutorials-helloworld",
+  "name": "@cartesi/descartes-tutorials",
   "version": "0.1.0",
-  "description": "HelloWorld Descartes DApp",
+  "description": "Descartes Tutorials",
   "directories": {
     "test": "test"
   },
@@ -10,7 +10,8 @@
   },
   "devDependencies": {
     "@truffle/contract": "^4.2.9",
-    "truffle": "^5.1.30"
+    "@truffle/hdwallet-provider": "^1.0.35",
+    "truffle": "^5.1.31"
   },
   "scripts": {
     "build": "truffle compile",

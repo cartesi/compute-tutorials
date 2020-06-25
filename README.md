@@ -22,13 +22,23 @@ or using the http address:
 git clone https://github.com/cartesi/descartes-tutorials.git
 ```
 
+### Descartes Node
+
+All tutorials in this repository are designed to interact with [Descartes](https://github.com/cartesi/descartes) nodes running locally.
+The Descartes node exposes a [ganache](https://github.com/trufflesuite/ganache-cli) instance running at `localhost:8545` with `Descartes` smart contract already deployed.
+
+It also includes two actors, alice and bob. To run a node:
+
+```bash
+% cd descartes-node
+% docker-compose up
+```
+
 ### Running
 
 Each subdirectory contains an independent DApp tutorial. Each tutorial consists of:
 - A Smart Contract, along with any dependencies and migrations
 - The specification of a Cartesi Machine that performs a computation
-
-The tutorials are currently designed to interact with Descartes Nodes instantiated by running the [Descartes docker-compose](https://github.com/cartesi-corp/descartes/blob/develop/docker-compose-template.yml)
 
 To run each tutorial, first `cd` into its directory. For instance:
 ```
@@ -40,9 +50,9 @@ Then build the machine by executing:
 % cd cartesi-machine
 % ./build-cartesi-machine.sh
 ```
-This will build the DApp's Cartesi Machine and store it in a subdirectory named after its hash. You should then move this to the appropriate data directories used by the Descartes Nodes (`dapp_data_0` and `dapp_data_1`).
+This will build the DApp's Cartesi Machine and store it in a subdirectory named after its hash. You should then move this to the appropriate data directories used by the Descartes Nodes (`descartes-node/machines`).
 
-The DApp Smart Contract must be compiled and migrated using the same network where Descartes is deployed (edit `truffle-config.js` if necessary, and make sure `@cartesi/descartes-sdk/build/contracts/Descartes.json` includes the desired network):
+The DApp Smart Contract must be compiled and migrated to the same ganache network of the local Descartes node:
 ```
 % yarn
 % truffle compile
@@ -53,7 +63,7 @@ Once this is done, the DApp can be tested using `truffle console`. For instance,
 ```
 % truffle console
 truffle(development)> let hw = await HelloWorld.deployed()
-truffle(development)> hw.instantiate('0xf865DC3d1a10440864515Ec48258356cfa8c3063','0x6a07bc9Aaa4d21092cdb796a73F226E4FB33B0e6')
+truffle(development)> hw.instantiate('0xe9bE0C14D35c5fA61B8c0B34f4c4e2891eC12e7E','0x91472CCE70B1080FdD969D41151F2763a4A22717')
 ```
 
 After the computation completes, it will be possible to query the results:

@@ -1,6 +1,6 @@
 const contract = require("@truffle/contract");
 const HelloWorld = artifacts.require("HelloWorld");
-const Descartes = contract(require("@cartesi/descartes-sdk/build/contracts/Descartes.json"));
+const Descartes = contract(require("../../descartes-node/blockchain/node_modules/@cartesi/descartes-sdk/build/contracts/Descartes.json"));
 
 module.exports = function(deployer) {
   Descartes.setNetwork(deployer.network_id);

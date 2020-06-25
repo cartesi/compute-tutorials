@@ -1,0 +1,21 @@
+
+version: '3'
+services:
+  ganache:
+    image: trufflesuite/ganache-cli:v6.9.1
+    command: ["ganache-cli", "--mnemonic", "donor rather all fix tongue poverty camera oxygen have length thumb beach", "--db", "/ganache_data", "--networkId", "7777"]
+    volumes:
+      - ./ganache_data:/ganache_data
+
+  deployer:
+    depends_on: [ganache]
+    build:
+      context: .
+      dockerfile: ./deployer/Dockerfile
+      args:
+        - NPM_TOKEN=${NPM_TOKEN}
+    environment:
+      ETHEREUM_HOST: ganache
+      ETHEREUM_NETWORK: ganache
+    volumes:
+      - ./blockchain:/opt/cartesi/share/blockchain

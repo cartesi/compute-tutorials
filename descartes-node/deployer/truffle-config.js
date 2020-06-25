@@ -4,7 +4,12 @@ module.exports = {
       host: "127.0.0.1",
       port: 8545,
       network_id: "7777", // test network
-    }
+    },
+    ganache: {
+      host: "ganache",
+      port: 8545,
+      network_id: "7777", // test network
+    },
   },
   compilers: {
     solc: {

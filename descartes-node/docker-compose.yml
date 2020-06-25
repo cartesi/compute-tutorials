@@ -1,0 +1,122 @@
+version: '3'
+services:
+  ganache:
+    image: trufflesuite/ganache-cli:v6.9.1
+    command: ["ganache-cli", "--mnemonic", "donor rather all fix tongue poverty camera oxygen have length thumb beach", "--db", "/ganache_data", "--networkId", "7777"]
+    volumes:
+      - ./ganache_data:/ganache_data
+    expose:
+      - 8545
+    ports:
+      - 8545:8545
+    networks:
+      - ethereum
+
+  alice_dispatcher:
+    image: cartesi/descartes
+    environment:
+      RUST_LOG: dispatcher=info,transaction=info,configuration=trace,utils=trace,state=info,descartes=trace
+      WEB3_PROVIDER_URI: http://ganache:8545
+      MNEMONIC: "donor rather all fix tongue poverty camera oxygen have length thumb beach"
+      ACCOUNT_INDEX: 0
+      QUERY_PORT: 3001
+      ETHEREUM_HOST: ganache
+      ETHEREUM_PORT: 8545
+      MACHINE_MANAGER_HOST: machine-manager
+      MACHINE_MANAGER_PORT: 50051
+      LOGGER_HOST: logger
+      LOGGER_PORT: 50051
+      DOCKER: "TRUE"
+    volumes:
+      - ./blockchain:/opt/cartesi/share/blockchain:ro
+      - alice_data:/opt/cartesi/srv/descartes
+    networks:
+      ethereum: {}
+      alice:
+        aliases:
+          - dispatcher
+
+  alice_logger:
+    image: cartesi/logger-server:0.2.2
+    command: [ "-c", "/opt/cartesi/share/blockchain/node_modules/@cartesi/logger/build/contracts/Logger.json" ]
+    volumes:
+      - ./blockchain:/opt/cartesi/share/blockchain:ro
+      - alice_data:/opt/cartesi/srv/logger-server
+    environment:
+      WEB3_PROVIDER_URI: http://ganache:8545
+      MNEMONIC: "donor rather all fix tongue poverty camera oxygen have length thumb beach"
+      ACCOUNT_INDEX: 0
+    networks:
+      ethereum: {}
+      alice:
+        aliases:
+          - logger
+
+  alice_machine_manager:
+    image: cartesicorp/machine-manager:next
+    volumes:
+      - ./machines:/opt/cartesi/srv/descartes/cartesi-machine
+    networks:
+      ethereum: {}
+      alice:
+        aliases:
+          - machine-manager
+
+  bob_dispatcher:
+    image: cartesi/descartes
+    environment:
+      RUST_LOG: dispatcher=info,transaction=info,configuration=trace,utils=trace,state=info,descartes=trace
+      WEB3_PROVIDER_URI: http://ganache:8545
+      MNEMONIC: "donor rather all fix tongue poverty camera oxygen have length thumb beach"
+      ACCOUNT_INDEX: 1
+      QUERY_PORT: 3001
+      ETHEREUM_HOST: ganache
+      ETHEREUM_PORT: 8545
+      MACHINE_MANAGER_HOST: machine-manager
+      MACHINE_MANAGER_PORT: 50051
+      LOGGER_HOST: logger
+      LOGGER_PORT: 50051
+      DOCKER: "TRUE"
+    volumes:
+      - ./blockchain:/opt/cartesi/share/blockchain:ro
+      - bob_data:/opt/cartesi/srv/descartes
+    networks:
+      ethereum: {}
+      bob:
+        aliases:
+          - dispatcher
+
+  bob_logger:
+    image: cartesi/logger-server:0.2.2
+    command: [ "-c", "/opt/cartesi/share/blockchain/node_modules/@cartesi/logger/build/contracts/Logger.json" ]
+    volumes:
+      - ./blockchain:/opt/cartesi/share/blockchain:ro
+      - bob_data:/opt/cartesi/srv/logger-server
+    environment:
+      WEB3_PROVIDER_URI: http://ganache:8545
+      MNEMONIC: "donor rather all fix tongue poverty camera oxygen have length thumb beach"
+      ACCOUNT_INDEX: 1
+    networks:
+      ethereum: {}
+      bob:
+        aliases:
+          - logger
+
+  bob_machine_manager:
+    image: cartesicorp/machine-manager:next
+    volumes:
+      - ./machines:/opt/cartesi/srv/descartes/cartesi-machine
+    networks:
+      ethereum: {}
+      bob:
+        aliases:
+          - machine-manager
+
+volumes:
+  alice_data:
+  bob_data:
+
+networks:
+  ethereum:
+  alice:
+  bob:
