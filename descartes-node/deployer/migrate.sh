@@ -1,26 +1,23 @@
 #!/bin/sh
 
+set -e
+
+abi_path=${ABI_PATH:-../blockchain}
+
 echo "Unlocking account if geth is used"
-truffle exec /opt/cartesi/deployer/unlockAccount.js --network ${ETHEREUM_NETWORK}
+truffle exec unlockAccount.js --network ${ETHEREUM_NETWORK:-development}
 
-echo "Deploying @cartesi/util"
-cd node_modules/@cartesi/util && truffle migrate --network ${ETHEREUM_NETWORK} && cd ../../..
+packages='@cartesi/util @cartesi/arbitration @cartesi/machine-solidity-step @cartesi/logger @cartesi/descartes-sdk'
 
-echo "Deploying @cartesi/arbitration"
-cd node_modules/@cartesi/arbitration && truffle migrate --network ${ETHEREUM_NETWORK} && cd ../../..
+# deploy each package, in the correct order
+for package in $packages ; do
+    ./migrate_package.sh $package
+done
 
-echo "Deploying @cartesi/machine-solidity-step"
-cd node_modules/@cartesi/machine-solidity-step && truffle migrate --network ${ETHEREUM_NETWORK} && cd ../../..
-
-echo "Deploying @cartesi/logger"
-cd node_modules/@cartesi/logger && truffle migrate --network ${ETHEREUM_NETWORK} && cd ../../..
-
-echo "Deploying @cartesi/descartes-sdk"
-cd node_modules/@cartesi/descartes-sdk && truffle migrate --network ${ETHEREUM_NETWORK} && cd ../../..
-
-echo "Copying json files to /opt/cartesi/share/blockchain"
-rsync -aurRP --files-from=files . /opt/cartesi/share/blockchain
+# copy json files we need for descartes
+echo "Copying json files to $abi_path"
+rsync -aurRP --files-from=files . $abi_path
 
 # XXX: fix this later, descartes configuration
-mkdir -p /opt/cartesi/share/blockchain/build/contracts/
-cp node_modules/@cartesi/descartes-sdk/build/contracts/Descartes.json /opt/cartesi/share/blockchain/build/contracts/
+mkdir -p $abi_path/build/contracts/
+cp node_modules/@cartesi/descartes-sdk/build/contracts/Descartes.json $abi_path/build/contracts/

@@ -17,5 +17,6 @@ services:
     environment:
       ETHEREUM_HOST: ganache
       ETHEREUM_NETWORK: ganache
+      ABI_PATH: /opt/cartesi/share/blockchain
     volumes:
       - ./blockchain:/opt/cartesi/share/blockchain

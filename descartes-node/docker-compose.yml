@@ -13,7 +13,7 @@ services:
       - ethereum
 
   alice_dispatcher:
-    image: cartesi/descartes
+    image: cartesicorp/descartes
     environment:
       RUST_LOG: dispatcher=info,transaction=info,configuration=trace,utils=trace,state=info,descartes=trace
       WEB3_PROVIDER_URI: http://ganache:8545
@@ -63,7 +63,7 @@ services:
           - machine-manager
 
   bob_dispatcher:
-    image: cartesi/descartes
+    image: cartesicorp/descartes
     environment:
       RUST_LOG: dispatcher=info,transaction=info,configuration=trace,utils=trace,state=info,descartes=trace
       WEB3_PROVIDER_URI: http://ganache:8545
