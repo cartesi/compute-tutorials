@@ -25,12 +25,17 @@ git clone https://github.com/cartesi/descartes-tutorials.git
 ### Environment
 
 All tutorials in this repository are designed to interact with [Descartes](https://github.com/cartesi/descartes) nodes running locally.
-Both the tutorials and the Descartes nodes are configured to interact with a local [ganache](https://github.com/trufflesuite/ganache-cli) instance running at `localhost:8545`, with the `Descartes` smart contract already deployed.
+Both the tutorials and the Descartes nodes are configured to interact with a local [ganache](https://github.com/trufflesuite/ganache-cli) instance running at `localhost:8545`. The environment is configured for two actors, `alice` and `bob`, each of which has an account in the `ganache` instance as well as a corresponding Descartes node.
 
-It also includes two actors, `alice` and `bob`. To run the entire environment, execute:
-
+To initialize the local `ganache` network and deploy the `Descartes` smart contract there, execute:
 ```bash
-% cd descartes-node
+% cd descartes-env
+% ./deploy.sh
+```
+
+To run the entire environment, execute:
+```bash
+% cd descartes-env
 % docker-compose up
 ```
 
@@ -41,38 +46,43 @@ Each subdirectory contains an independent DApp tutorial. Each tutorial consists 
 - The specification of a Cartesi Machine that performs a computation
 
 To run each tutorial, first `cd` into its directory. For instance:
-```
+```bash
 % cd helloworld
 ```
 
-Then build the machine by executing:
+Then build the DApp's Cartesi Machine and store it in an appropriate directory accessible by the Descartes nodes. To do this, execute the following:
+```bash
+% ./cartesi-machine/build-cartesi-machine.sh ../descartes-env/machines
 ```
-% cd cartesi-machine
-% ./build-cartesi-machine.sh
-```
-This will build the DApp's Cartesi Machine and store it in a subdirectory named after its hash. You should then move this to the appropriate data directories used by the Descartes Nodes (`descartes-node/machines`).
 
-The DApp smart contract must be compiled and migrated (configuration is using the same local ganache instance used by the Descartes nodes):
-```
+Install, compile and migrate the DApp's smart contract (project configuration is set to use the same local ganache instance used by the Descartes nodes):
+```bash
 % yarn
-% truffle compile
 % truffle migrate
 ```
 
 Once this is done, the DApp can be tested using `truffle console`. For instance, for the HelloWorld DApp one can use:
-```
+```bash
 % truffle console
 truffle(development)> web3.eth.getAccounts()
 [
-  '0x9fb20A8574d1dfbAF952d74a2Ee3996EF0B56987',
-  '0xbA984a7D414Ab65eD83c5765E339391B08A2b53A'
+  '0xe9bE0C14D35c5fA61B8c0B34f4c4e2891eC12e7E',
+  '0x91472CCE70B1080FdD969D41151F2763a4A22717',
+  '0xC378aAfabCEb059892a7e3057c3011f923D15361',
+  '0xD70a4fEe08f44b2FbEA02EfFf4dAb89288364D88',
+  '0x4Fe300A8135A3d89Eeb2CFD30D7E4734c0E54Dd9',
+  '0x88aF465f0FD9cF801bd977F2642A0dA15ED119a9',
+  '0x301C3A58DB16F3A22455E7a7FA4BDf621B93bC42',
+  '0x1921055736Dd3352BDEf274Ded2dB352dD9d0E4f',
+  '0x3143B3b2391D8CdAfbceD80Cd55A12A8426FD013',
+  '0x8F41342E6797e2bd99B07233646ec9620A67636c'
 ]
 truffle(development)> hw = await HelloWorld.deployed()
-truffle(development)> hw.instantiate('0x9fb20A8574d1dfbAF952d74a2Ee3996EF0B56987', '0xbA984a7D414Ab65eD83c5765E339391B08A2b53A')
+truffle(development)> hw.instantiate('0xe9bE0C14D35c5fA61B8c0B34f4c4e2891eC12e7E', '0x91472CCE70B1080FdD969D41151F2763a4A22717')
 ```
 
 After the computation completes, it will be possible to query the results:
-```
+```bash
 truffle(development)> res = await hw.getResult(0)
 truffle(development)> res
 Result {
@@ -88,14 +98,14 @@ truffle(development)> web3.utils.toAscii(res['3'])
 ## Creating a new DApp
 
 First of all, create a subdirectory for the DApp and initialize it with truffle:
-```
+```bash
 % mkdir mydapp
 % cd mydapp
 % truffle init
 ```
 
 The default network uses localhost on port 7545. To use the local `ganache` instance, we must edit `truffle-config.js` to specify port 8545:
-```
+```javascript
   networks: {
     development: {
      host: "127.0.0.1",     // Localhost (default: none)
@@ -106,13 +116,13 @@ The default network uses localhost on port 7545. To use the local `ganache` inst
 ```
 
 Add project dependency to Descartes and to `@truffle/contract` (used for migrating the smart contracts):
-```
+```bash
 % yarn add @cartesi/descartes-sdk
 % yarn add @truffle/contract
 ```
 
 Create the smart contract for the DApp in `./contracts` (e.g., `./contracts/MyDapp.sol`). It should import `DescartesInterface` to be able to use the Descartes contract:
-```
+```javascript
 pragma solidity >=0.4.25 <0.7.0;
 pragma experimental ABIEncoderV2;
 
@@ -128,9 +138,9 @@ contract MyDapp {
 ```
 
 Create a migration file `./migrations/2_deploy_contracts.js` to publish the DApp smart contract linked to the Descartes smart contract:
-```
+```javascript
 const contract = require("@truffle/contract");
-const Descartes = contract(require("@cartesi/descartes-sdk/build/contracts/Descartes.json"));
+const Descartes = contract(require("../../descartes-env/blockchain/node_modules/@cartesi/descartes-sdk/build/contracts/Descartes.json"));
 const MyDapp = artifacts.require("MyDapp");
 
 module.exports = function(deployer) {
@@ -140,7 +150,7 @@ module.exports = function(deployer) {
 ```
 
 Run `truffle migrate` to publish contract to the network:
-```
+```bash
 % truffle migrate
 ```
 

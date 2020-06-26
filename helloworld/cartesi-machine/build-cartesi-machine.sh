@@ -1,10 +1,16 @@
 # general definitions
-MACHINE_STORE_TEMP_DIR=__temp_machine_store
+MACHINES_DIR=.
+MACHINE_TEMP_DIR=__temp_machine
 CARTESI_PLAYGROUND_DOCKER=cartesicorp/playground
 
+# set machines directory to specified path if provided
+if [ $1 ]; then
+  MACHINES_DIR=$1
+fi
+
 # removes machine temp store directory if it exists
-if [ -d "$MACHINE_STORE_TEMP_DIR" ]; then
-  rm -r $MACHINE_STORE_TEMP_DIR
+if [ -d "$MACHINE_TEMP_DIR" ]; then
+  rm -r $MACHINE_TEMP_DIR
 fi
 
 # builds machine (running with 0 cycles)
@@ -23,11 +29,11 @@ docker run \
     --flash-drive="label:output,length:1<<12" \
     --max-mcycle=0 \
     --initial-hash \
-    --store="$MACHINE_STORE_TEMP_DIR" \
+    --store="$MACHINE_TEMP_DIR" \
     -- $'echo Hello World! | dd status=none of=$(flashdrive output)'
 
-# moves stored machine to a folder named after the machine's hash
-mv $MACHINE_STORE_TEMP_DIR $(docker run \
+# moves stored machine to a folder within $MACHINES_DIR named after the machine's hash
+mv $MACHINE_TEMP_DIR $MACHINES_DIR/$(docker run \
   -e USER=$(id -u -n) \
   -e GROUP=$(id -g -n) \
   -e UID=$(id -u) \
@@ -35,4 +41,4 @@ mv $MACHINE_STORE_TEMP_DIR $(docker run \
   -v `pwd`:/home/$(id -u -n) \
   -h playground \
   -w /home/$(id -u -n) \
-  --rm $CARTESI_PLAYGROUND_DOCKER cartesi-machine-stored-hash $MACHINE_STORE_TEMP_DIR/)
+  --rm $CARTESI_PLAYGROUND_DOCKER cartesi-machine-stored-hash $MACHINE_TEMP_DIR/)
