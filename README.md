@@ -32,6 +32,7 @@ To initialize the local `ganache` network and deploy the `Descartes` smart contr
 % cd descartes-env
 % ./deploy.sh
 ```
+(you should manually stop the ganache instance once deploy is complete)
 
 To run the entire environment, execute:
 ```bash
@@ -67,15 +68,7 @@ Once this is done, the DApp can be tested using `truffle console`. For instance,
 truffle(development)> web3.eth.getAccounts()
 [
   '0xe9bE0C14D35c5fA61B8c0B34f4c4e2891eC12e7E',
-  '0x91472CCE70B1080FdD969D41151F2763a4A22717',
-  '0xC378aAfabCEb059892a7e3057c3011f923D15361',
-  '0xD70a4fEe08f44b2FbEA02EfFf4dAb89288364D88',
-  '0x4Fe300A8135A3d89Eeb2CFD30D7E4734c0E54Dd9',
-  '0x88aF465f0FD9cF801bd977F2642A0dA15ED119a9',
-  '0x301C3A58DB16F3A22455E7a7FA4BDf621B93bC42',
-  '0x1921055736Dd3352BDEf274Ded2dB352dD9d0E4f',
-  '0x3143B3b2391D8CdAfbceD80Cd55A12A8426FD013',
-  '0x8F41342E6797e2bd99B07233646ec9620A67636c'
+  '0x91472CCE70B1080FdD969D41151F2763a4A22717'
 ]
 truffle(development)> hw = await HelloWorld.deployed()
 truffle(development)> hw.instantiate('0xe9bE0C14D35c5fA61B8c0B34f4c4e2891eC12e7E', '0x91472CCE70B1080FdD969D41151F2763a4A22717')
