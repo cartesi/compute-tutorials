@@ -97,13 +97,13 @@ First of all, create a subdirectory for the DApp and initialize it with truffle:
 % truffle init
 ```
 
-The default network uses localhost on port 7545. To use the local `ganache` instance, we must edit `truffle-config.js` to specify port 8545:
+To use the local `ganache` instance, we must edit `truffle-config.js` to specify port 8545 for network ID 7777:
 ```javascript
   networks: {
     development: {
      host: "127.0.0.1",     // Localhost (default: none)
-     port: 8545,            // Standard Ethereum port (default: none)
-     network_id: "*",       // Any network (default: none)
+     port: 8545,            // Ganache CLI port (default: none)
+     network_id: "7777",    // test network (default: none)
     },
   },
 ```
