@@ -12,8 +12,6 @@ services:
     build:
       context: .
       dockerfile: ./deployer/Dockerfile
-      args:
-        - NPM_TOKEN=${NPM_TOKEN}
     environment:
       ETHEREUM_HOST: ganache
       ETHEREUM_NETWORK: ganache

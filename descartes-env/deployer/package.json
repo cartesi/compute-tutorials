@@ -6,12 +6,12 @@
     "test": "test"
   },
   "dependencies": {
-    "@cartesi/descartes-sdk": "^0.1.0-alpha.0"
+    "@cartesi/descartes-sdk": "^0.1.0"
   },
   "devDependencies": {
-    "@truffle/contract": "^4.2.9",
-    "@truffle/hdwallet-provider": "^1.0.35",
-    "truffle": "^5.1.31"
+    "@truffle/contract": "^4.2.10",
+    "@truffle/hdwallet-provider": "^1.0.36",
+    "truffle": "^5.1.32"
   },
   "scripts": {
     "build": "truffle compile",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cartesi-corp/descartes-tutorials.git"
+    "url": "git+https://github.com/cartesi/descartes-tutorials.git"
   },
   "keywords": [
     "cartesi"
@@ -27,7 +27,7 @@
   "author": "Milton Jonathan <milton.jonathan@cartesi.io>",
   "license": "GPL-3.0-only",
   "bugs": {
-    "url": "https://github.com/cartesi-corp/descartes-tutorials/issues"
+    "url": "https://github.com/cartesi/descartes-tutorials/issues"
   },
-  "homepage": "https://github.com/cartesi-corp/descartes-tutorials#readme"
+  "homepage": "https://github.com/cartesi/descartes-tutorials#readme"
 }

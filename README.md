@@ -1,6 +1,6 @@
 # Descartes SDK Tutorials
 
-This project contains tutorial DApps implemented with the Descartes SDK, as documented in https://github.com/cartesi-corp/docs
+This project contains tutorial DApps implemented with the Descartes SDK, as documented in https://cartesi.io/docs/
 
 ## Getting Started
 
@@ -30,7 +30,7 @@ Both the tutorials and the Descartes nodes are configured to interact with a loc
 To initialize the local `ganache` network and deploy the `Descartes` smart contract there, execute:
 ```bash
 % cd descartes-env
-% ./deploy.sh
+% make deploy
 ```
 (you should manually stop the ganache instance once deploy is complete)
 

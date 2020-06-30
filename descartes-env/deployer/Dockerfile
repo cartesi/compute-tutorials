@@ -17,9 +17,6 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 
 ENV BASE /opt/cartesi
 
-ARG NPM_TOKEN
-RUN echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-
 RUN yarn global add truffle@5.1.31
 
 WORKDIR $BASE/deployer
