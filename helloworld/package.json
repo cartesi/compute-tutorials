@@ -6,7 +6,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@cartesi/descartes-sdk": "^0.1.0"
+    "@cartesi/descartes-sdk": "^0.1.1"
   },
   "devDependencies": {
     "@truffle/contract": "^4.2.10",
