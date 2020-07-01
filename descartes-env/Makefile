@@ -1,6 +1,6 @@
 .PHONY: clean deploy
 
-TAG := 0.1.0
+TAG := 0.1.1
 
 deploy:
 	docker-compose -f deployer.yml up --build
