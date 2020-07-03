@@ -6,8 +6,6 @@ import "@cartesi/descartes-sdk/contracts/DescartesInterface.sol";
 
 contract HelloWorld {
 
-    string defaultValue = "Hello World!";
-
     DescartesInterface descartes;
 
     uint256 finalTime = 1e13;
