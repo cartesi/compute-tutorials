@@ -1,0 +1,7 @@
+node_modules/
+build/
+test/*/
+descartes-env/blockchain/
+descartes-env/ganache_data/
+.vscode/
+descartes-env*.tar.gz
