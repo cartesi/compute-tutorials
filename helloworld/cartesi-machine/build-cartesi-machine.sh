@@ -1,3 +1,4 @@
+#!/bin/bash
 # general definitions
 MACHINES_DIR=.
 MACHINE_TEMP_DIR=__temp_machine
