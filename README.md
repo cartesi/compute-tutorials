@@ -53,8 +53,10 @@ To run each tutorial, first `cd` into its directory. For instance:
 
 Then build the DApp's Cartesi Machine and store it in an appropriate directory accessible by the Descartes nodes. To do this, execute the following:
 ```bash
-% ./cartesi-machine/build-cartesi-machine.sh ../descartes-env/machines
+% cd cartesi-machine
+% ./build-cartesi-machine.sh ../../descartes-env/machines
 ```
+> **Note:** for some tutorials, building an appropriate machine requires a custom `rootfs.ext2` file-system drive. This process is [documented here](https://docs.cartesi.io/machine/target/linux#the-root-file-system). More specific instructions are given within each tutorial.
 
 Install, compile and migrate the DApp's smart contract (project configuration is set to use the same local ganache instance used by the Descartes nodes):
 ```bash
