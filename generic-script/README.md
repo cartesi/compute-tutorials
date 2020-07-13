@@ -75,18 +75,18 @@ The process of building a custom `rootfs.ext2` file is [documented here](https:/
 To speed things up, first pull the latest `cartesi/rootfs` Docker image and tag it as `cartesi/rootfs:devel`
 
 ```
-docker pull cartesi/rootfs:latest
-docker tag cartesi/rootfs:latest cartesi/rootfs:devel
+$ docker pull cartesi/rootfs:latest
+$ docker tag cartesi/rootfs:latest cartesi/rootfs:devel
 ```
  
 Then, clone the [machine-emulator-sdk](https://github.com/cartesi/machine-emulator-sdk) repository along with its submodules:
 
 ```
-git clone --recurse-submodules git@github.com:cartesi/machine-emulator-sdk.git
+$ git clone --recurse-submodules ssh://github.com/cartesi/machine-emulator-sdk.git
 ```
 or using the http address:
 ```
-git clone --recurse-submodules https://github.com/cartesi/machine-emulator-sdk.git
+$ git clone --recurse-submodules https://github.com/cartesi/machine-emulator-sdk.git
 ```
 
 Finally, `cd` into the `fs` sub-directory and run `make config` to select the desired packages using a textual menu interface.
