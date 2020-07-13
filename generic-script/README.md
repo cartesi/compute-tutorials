@@ -2,15 +2,17 @@
 
 This tutorial defines a DApp capable of running an arbitrary script using Descartes.
 
-> **DISCLAIMER**: this is **NOT** the recommended way of implementing a DApp using Descartes. It usually makes no sense to waste resources building a full script on-chain - we should rather move all possible logic into the off-chain Cartesi Machine. However, this strategy is used here for the purposes of illustrating the potential of Descartes, so as to avoid the need of building a different machine for every script we want to exercise.
+> **NOTE**: at this time, this tutorial requires the latest features only available on the `develop` branch of [descartes](https://github.com/cartesi-corp/descartes). In order to use that unreleased version, you may [follow these instructions](../README.md#using-latest-unreleased-descartes-optional).
+
+> **DISCLAIMER**: this is **NOT** the recommended way of implementing a DApp using Descartes. It usually makes no sense to waste resources building a full script on-chain - all possible logic should rather be moved into the off-chain Cartesi Machine. However, this strategy is used here for the purposes of illustrating the potential of Descartes, so as to avoid the need of building a different machine for every script we want to exercise.
 
 ## Usage
 
-The DApp's on-chain code will specify a pre-defined script in the form of a string with a size up to 1024 bytes. That string must start with a *shebang line* indicating the interpreter to use. It will then be specified as an input drive when executing the Cartesi Machine.
+The DApp's on-chain code will specify a pre-defined script in the form of a string, with a size of up to 1024 bytes. That string must start with a *shebang line* indicating the interpreter to use. It will then be specified as an input drive when executing the Cartesi Machine.
 
 Of course, in order to work, the specified interpreter must be available inside the Cartesi Machine. The current DApp implementation expects the machine to be capable of running commands using `/bin/sh`, `/usr/bin/lua` and `/usr/bin/python3`. Details about how to build the machine with these resources are given [below](#root-file-system-for-the-cartesi-machine).
 
-As it is, the `script` variable in `contracts/GenericScript.sol` could be any of the following examples:
+As it is, the `script` variable in [contracts/GenericScript.sol](contracts/GenericScript.sol) could be any of the following examples:
 
 ### Shell
 
@@ -59,9 +61,10 @@ print(payload)
 ```
 
 Result:
-```json
+```javascript
 {'some': 'payload'}
 ```
+
 
 ## Root file-system for the Cartesi Machine
 

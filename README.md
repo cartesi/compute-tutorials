@@ -40,6 +40,7 @@ To run the entire environment, execute:
 % docker-compose up
 ```
 
+
 ## Running a DApp tutorial
 
 Each subdirectory contains an independent DApp tutorial. Each tutorial consists of:
@@ -117,7 +118,7 @@ Add project dependency to Descartes and to `@truffle/contract` (used for migrati
 ```
 
 Create the smart contract for the DApp in `./contracts` (e.g., `./contracts/MyDapp.sol`). It should import `DescartesInterface` to be able to use the Descartes contract:
-```javascript
+```sol
 pragma solidity >=0.4.25 <0.7.0;
 pragma experimental ABIEncoderV2;
 
@@ -133,7 +134,7 @@ contract MyDapp {
 ```
 
 Create a migration file `./migrations/2_deploy_contracts.js` to publish the DApp smart contract linked to the Descartes smart contract:
-```javascript
+```sol
 const contract = require("@truffle/contract");
 const Descartes = contract(require("../../descartes-env/blockchain/node_modules/@cartesi/descartes-sdk/build/contracts/Descartes.json"));
 const MyDapp = artifacts.require("MyDapp");
@@ -149,6 +150,63 @@ Run `truffle migrate` to publish contract to the network:
 % truffle migrate
 ```
 
+
+## Using latest unreleased Descartes (optional)
+
+In order to run these tutorials with the latest features only available on the `develop` branch of the [Descartes project](https://github.com/cartesi-corp/descartes), first of all clone that repository, making sure to include the submodules. For instance:
+
+```bash
+% cd ..
+% git clone --recurse-submodules ssh://github.com/cartesi-corp/descartes.git
+```
+
+Then, build the Descartes Docker image (this will take some time):
+
+```bash
+% cd descartes
+% docker build . -t cartesicorp/descartes:develop
+```
+
+After that, use Yarn to pack Descartes' dependencies as a gzip compressed file, and place that file inside the `descartes-env/deployer` directory within `descartes-tutorials`. For instance:
+
+```
+% yarn pack --filename ../descartes-tutorials/descartes-env/deployer/cartesi-descartes-sdk-develop.tgz
+```
+
+Back in the `descartes-tutorials` project, change the Docker Compose configuration used by your local Environment by editing `descartes-env/docker-compose.yml`, so that `alice`'s and `bob`'s dispatchers use the newly built Docker image:
+
+```yml
+  ...
+  alice_dispatcher:
+    image: cartesicorp/descartes:develop
+  ...
+  bob_dispatcher:
+    image: cartesicorp/descartes:develop
+  ...
+```
+
+Then, `cd` into the `descartes-env/deployer` directory and use Yarn to make sure the local Descartes Environment uses the generated gzip file with Descartes' dependencies:
+
+```bash
+% cd ./descartes-env/deployer
+% yarn add cartesi-descartes-sdk-develop.tgz
+```
+
+At this point, you can clean up your Descartes Environment and redeploy it with the updated setup:
+
+```
+% cd ..
+% sudo make clean
+% make deploy
+% docker-compose up
+```
+
+Finally, `cd` into the tutorial project of interest, and also ensure it uses the same generated gzip file with Descartes' dependencies:
+
+```bash
+% cd ../<tutorial-project>
+% yarn add ../descartes-env/deployer/cartesi-descartes-sdk-develop.tgz
+```
 
 ## Contributing
 
