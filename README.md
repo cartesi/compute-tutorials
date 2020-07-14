@@ -15,7 +15,7 @@ This project contains tutorial DApps implemented with the Descartes SDK, as docu
 ### Cloning
 
 ```
-$ git clone ssh://github.com/cartesi/descartes-tutorials.git
+$ git clone git@github.com:cartesi/descartes-tutorials.git
 ```
 or using the http address:
 ```
@@ -151,26 +151,26 @@ $ truffle migrate
 ```
 
 
-## Using latest unreleased Descartes (optional)
+## Using local Descartes build (optional)
 
-In order to run these tutorials with the latest features only available on the `develop` branch of the [Descartes project](https://github.com/cartesi-corp/descartes), first of all clone that repository, making sure to include the submodules. For instance:
+In order to run these tutorials with a local build of the [Descartes project](https://github.com/cartesi/descartes), first of all clone that repository, making sure to include the submodules. For instance:
 
 ```bash
 $ cd ..
-$ git clone --recurse-submodules ssh://github.com/cartesi-corp/descartes.git
+$ git clone --recurse-submodules git@github.com:cartesi/descartes.git
 ```
 
 Then, build the Descartes Docker image (this will take some time):
 
 ```bash
 $ cd descartes
-$ docker build . -t cartesicorp/descartes:develop
+$ docker build . -t cartesi/descartes:latest
 ```
 
 After that, use Yarn to pack Descartes' dependencies as a gzip compressed file, and place that file inside the `descartes-env/deployer` directory within `descartes-tutorials`. For instance:
 
 ```bash
-$ yarn pack --filename ../descartes-tutorials/descartes-env/deployer/cartesi-descartes-sdk-develop.tgz
+$ yarn pack --filename ../descartes-tutorials/descartes-env/deployer/cartesi-descartes-sdk-latest.tgz
 ```
 
 Back in the `descartes-tutorials` project, change the Docker Compose configuration used by your local Environment by editing `descartes-env/docker-compose.yml`, so that `alice`'s and `bob`'s dispatchers use the newly built Docker image:
@@ -178,10 +178,10 @@ Back in the `descartes-tutorials` project, change the Docker Compose configurati
 ```yml
   ...
   alice_dispatcher:
-    image: cartesicorp/descartes:develop
+    image: cartesi/descartes:latest
   ...
   bob_dispatcher:
-    image: cartesicorp/descartes:develop
+    image: cartesi/descartes:latest
   ...
 ```
 
@@ -189,7 +189,7 @@ Then, `cd` into the `descartes-env/deployer` directory and use Yarn to make sure
 
 ```bash
 $ cd ./descartes-env/deployer
-$ yarn add cartesi-descartes-sdk-develop.tgz
+$ yarn add ./cartesi-descartes-sdk-latest.tgz
 ```
 
 At this point, you can clean up your Descartes Environment and redeploy it with the updated setup:
@@ -205,7 +205,7 @@ Finally, `cd` into the tutorial project of interest, and also ensure it uses the
 
 ```bash
 $ cd ../<tutorial-project>
-$ yarn add ../descartes-env/deployer/cartesi-descartes-sdk-develop.tgz
+$ yarn add ../descartes-env/deployer/cartesi-descartes-sdk-latest.tgz
 ```
 
 ## Contributing

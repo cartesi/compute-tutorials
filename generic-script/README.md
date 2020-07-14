@@ -2,7 +2,7 @@
 
 This tutorial defines a DApp capable of running an arbitrary script using Descartes.
 
-> **NOTE**: at this time, this tutorial requires the latest features only available on the `develop` branch of [descartes](https://github.com/cartesi-corp/descartes). In order to use that unreleased version, you may [follow these instructions](../README.md#using-latest-unreleased-descartes-optional).
+> **NOTE**: at this time, this tutorial requires the latest unreleased features of [Descartes](https://github.com/cartesi/descartes). In order to use that unreleased version, you may [follow these instructions](../README.md#using-local-descartes-build-optional).
 
 > **DISCLAIMER**: this is **NOT** the recommended way of implementing a DApp using Descartes. It usually makes no sense to waste resources building a full script on-chain - all possible logic should rather be moved into the off-chain Cartesi Machine. However, this strategy is used here for the purposes of illustrating the potential of Descartes, so as to avoid the need of building a different machine for every script we want to exercise.
 
@@ -82,7 +82,7 @@ $ docker tag cartesi/rootfs:latest cartesi/rootfs:devel
 Then, clone the [machine-emulator-sdk](https://github.com/cartesi/machine-emulator-sdk) repository along with its submodules:
 
 ```
-$ git clone --recurse-submodules ssh://github.com/cartesi/machine-emulator-sdk.git
+$ git clone --recurse-submodules git@github.com:cartesi/machine-emulator-sdk.git
 ```
 or using the http address:
 ```
