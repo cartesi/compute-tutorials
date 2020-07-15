@@ -12,7 +12,6 @@ contract GenericScript {
     bytes32 templateHash = 0x86374a11e83ac937078f753332e90966fb358fbf229040d2b17a08a476a6a54d;
     uint64 outputPosition = 0xa000000000000000;
     uint256 roundDuration = 45;
-    DescartesInterface.Drive[] drives;
 
     uint64 scriptLog2Size;
 
@@ -38,7 +37,9 @@ contract GenericScript {
 
     function instantiate(address claimer, address challenger) public returns (uint256) {
 
-        drives.push(DescartesInterface.Drive(
+        // specifies an input drive containing the script
+        DescartesInterface.Drive[] memory drives = new DescartesInterface.Drive[](1);
+        drives[0] = DescartesInterface.Drive(
             0x9000000000000000,    // position
             scriptLog2Size,        // driveLog2Size
             script,                // directValue
@@ -46,8 +47,9 @@ contract GenericScript {
             claimer,               // provider
             false,                 // waitsProvider
             false                  // needsLogger
-        ));
+        );
 
+        // instantiates the computation
         return descartes.instantiate(
             finalTime,
             templateHash,
