@@ -40,7 +40,7 @@ contract GenericScript {
         // specifies an input drive containing the script
         DescartesInterface.Drive[] memory drives = new DescartesInterface.Drive[](1);
         drives[0] = DescartesInterface.Drive(
-            0x9000000000000000,    // position
+            0x9000000000000000,    // 2nd drive position: 1st is the root filesystem (0x80..0)
             scriptLog2Size,        // driveLog2Size
             script,                // directValue
             0x00,                  // loggerRootHash
