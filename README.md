@@ -189,7 +189,7 @@ Then, `cd` into the `descartes-env/deployer` directory and use Yarn to make sure
 
 ```bash
 $ cd ./descartes-env/deployer
-$ yarn add ./cartesi-descartes-sdk-latest.tgz
+$ yarn add file:./cartesi-descartes-sdk-latest.tgz
 ```
 
 At this point, you can clean up your Descartes Environment and redeploy it with the updated setup:
@@ -205,7 +205,7 @@ Finally, `cd` into the tutorial project of interest, and also ensure it uses the
 
 ```bash
 $ cd ../<tutorial-project>
-$ yarn add ../descartes-env/deployer/cartesi-descartes-sdk-latest.tgz
+$ yarn add file:../descartes-env/deployer/cartesi-descartes-sdk-latest.tgz
 ```
 
 ## Contributing
