@@ -9,7 +9,7 @@ contract DogecoinHash {
     DescartesInterface descartes;
 
     uint256 finalTime = 1e13;
-    bytes32 templateHash = 0x063f3bca7762aa7107c7c0dbdbe9dc4c4cd66ff4a32aabc889278b993e342cf8;
+    bytes32 templateHash = 0x8bc459031809fcb366953f8373b3f202450ecbae51f3f724354480638725ff38;
     uint64 outputPosition = 0xb000000000000000;
     uint256 roundDuration = 45;
 
