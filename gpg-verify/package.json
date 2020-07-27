@@ -1,0 +1,32 @@
+{
+  "name": "@cartesi/descartes-tutorials-genericscript",
+  "version": "0.1.0",
+  "description": "GenericScript Descartes DApp",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@cartesi/descartes-sdk": "^0.1.1"
+  },
+  "devDependencies": {
+    "@truffle/contract": "^4.2.14",
+    "truffle": "^5.1.32"
+  },
+  "scripts": {
+    "build": "truffle compile",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cartesi/descartes-tutorials.git"
+  },
+  "keywords": [
+    "cartesi"
+  ],
+  "author": "Milton Jonathan <milton.jonathan@cartesi.io>",
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/cartesi/descartes-tutorials/issues"
+  },
+  "homepage": "https://github.com/cartesi/descartes-tutorials#readme"
+}
