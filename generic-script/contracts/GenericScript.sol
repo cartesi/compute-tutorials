@@ -11,9 +11,10 @@ contract GenericScript {
     uint256 finalTime = 1e13;
     bytes32 templateHash = 0x86374a11e83ac937078f753332e90966fb358fbf229040d2b17a08a476a6a54d;
     uint64 outputPosition = 0xa000000000000000;
+    uint64 outputLog2Size = 10;
     uint256 roundDuration = 45;
 
-    uint64 scriptLog2Size;
+    uint64 scriptLog2Size = 10;
 
     bytes script = "#!/usr/bin/lua\n\
         function fact (n)\n\
@@ -29,10 +30,6 @@ contract GenericScript {
 
     constructor(address descartesAddress) public {
         descartes = DescartesInterface(descartesAddress);
-
-        // expands script to 1024 bytes and defines scriptLog2Size accordingly
-        script.length = 1024;
-        scriptLog2Size = 10;
     }
 
     function instantiate(address claimer, address challenger) public returns (uint256) {
@@ -54,6 +51,7 @@ contract GenericScript {
             finalTime,
             templateHash,
             outputPosition,
+            outputLog2Size,
             roundDuration,
             claimer,
             challenger,
@@ -61,7 +59,11 @@ contract GenericScript {
         );
     }
 
-    function getResult(uint256 index) public view returns (bool, bool, address, bytes32) {
+    function getResult(uint256 index) public view returns (bool, bool, address, bytes memory) {
         return descartes.getResult(index);
+    }
+
+    function destruct(uint256 index) public {
+        descartes.destruct(index);
     }
 }

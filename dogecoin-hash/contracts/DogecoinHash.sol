@@ -11,6 +11,7 @@ contract DogecoinHash {
     uint256 finalTime = 1e13;
     bytes32 templateHash = 0x8bc459031809fcb366953f8373b3f202450ecbae51f3f724354480638725ff38;
     uint64 outputPosition = 0xb000000000000000;
+    uint64 outputLog2Size = 5;
     uint256 roundDuration = 45;
 
     
@@ -60,6 +61,7 @@ contract DogecoinHash {
             finalTime,
             templateHash,
             outputPosition,
+            outputLog2Size,
             roundDuration,
             claimer,
             challenger,
@@ -67,7 +69,11 @@ contract DogecoinHash {
         );
     }
 
-    function getResult(uint256 index) public view returns (bool, bool, address, bytes32) {
+    function getResult(uint256 index) public view returns (bool, bool, address, bytes memory) {
         return descartes.getResult(index);
+    }
+
+    function destruct(uint256 index) public {
+        descartes.destruct(index);
     }
 }

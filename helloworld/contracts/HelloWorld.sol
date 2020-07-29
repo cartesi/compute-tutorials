@@ -11,6 +11,7 @@ contract HelloWorld {
     uint256 finalTime = 1e13;
     bytes32 templateHash = 0x67713d54d15ab1f24ce34e2d89b480ba58200684740ed69be236e4ba3d6dd451;
     uint64 outputPosition = 0x9000000000000000;
+    uint64 outputLog2Size = 5;
     uint256 roundDuration = 45;
     DescartesInterface.Drive[] drives;
 
@@ -24,6 +25,7 @@ contract HelloWorld {
             finalTime,
             templateHash,
             outputPosition,
+            outputLog2Size,
             roundDuration,
             claimer,
             challenger,
@@ -31,7 +33,11 @@ contract HelloWorld {
         );
     }
 
-    function getResult(uint256 index) public view returns (bool, bool, address, bytes32) {
+    function getResult(uint256 index) public view returns (bool, bool, address, bytes memory) {
         return descartes.getResult(index);
+    }
+
+    function destruct(uint256 index) public {
+        descartes.destruct(index);
     }
 }

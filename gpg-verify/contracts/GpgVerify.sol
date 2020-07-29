@@ -10,6 +10,8 @@ contract GpgVerify {
 
     // this DApp has an ext2 file-system (at 0x90..00) and two input drives (at 0xa0..00 and 0xb0..00), so the output will be at 0xc0..00
     uint64 outputPosition = 0xc000000000000000;
+    // output will be "0" (success, no errors), "1" (failure), or some other error code that certainly fits into the minimum size of 32 bytes
+    uint64 outputLog2Size = 5;
 
     bytes32 templateHash = 0x3216779ec9659f48e7ec0b96342e4ae4b4a2e2f98813b75a9a7668e74dcf082f;
 
@@ -88,6 +90,7 @@ contract GpgVerify {
             finalTime,
             templateHash,
             outputPosition,
+            outputLog2Size,
             roundDuration,
             claimer,
             challenger,
@@ -95,7 +98,11 @@ contract GpgVerify {
         );
     }
 
-    function getResult(uint256 index) public view returns (bool, bool, address, bytes32) {
+    function getResult(uint256 index) public view returns (bool, bool, address, bytes memory) {
         return descartes.getResult(index);
+    }
+
+    function destruct(uint256 index) public {
+        descartes.destruct(index);
     }
 }
