@@ -1,9 +1,6 @@
 # GpgVerify Tutorial
 
-
 This tutorial DApp uses the [GNU Privacy Guard (GnuPG)](https://www.gnupg.org/) tool to verify that a given document was really signed by the expected party and has not been tampered.
-
-> **NOTE**: at this time, this tutorial requires the latest unreleased features of [Descartes](https://github.com/cartesi/descartes). In order to use that unreleased version, you may [follow these instructions](../README.md#using-local-descartes-build-optional).
 
 
 ## Usage
@@ -19,7 +16,7 @@ bytes signature = hex'8901d...a326c';
 
 In its turn, the DApp's Cartesi Machine contains the corresponding [public key](./cartesi-machine/descartes-pub.key) for that keypair, and thus works as a trusted verifier for the authenticity of any document signed by that private key.
 
-Please refer to the [GnuPG manual](https://www.gnupg.org/gph/en/manual.html) for details on how to create other keypairs and produce detached signatures.
+Please refer to the [GnuPG manual](https://www.gnupg.org/gph/en/manual.html) for details on how to create other keypairs and produce detached signatures. If desired, the provided private key can be used to sign other documents (its passphrase is "Descartes rocks!").
 
 
 ## Building the Cartesi Machine
@@ -40,3 +37,5 @@ $ ./build-cartesi-machine.sh ../../descartes-env/machines/
 ```
 
 > **NOTE**: as of this writing, in order to be reproducible the Cartesi Machine always starts running with timestamp `0` (1970-01-01 UTC). This is inconvenient for this computation, since the `gpg` tool requires the *signature* file's timestamp to be smaller than the current system time. For that purpose, the machine specified in `build-cartesi-machine.sh` sets an appropriate date before calling the main `gpg-verify.sh` script. Finally, keep in mind that changing this date (or any other aspect of the machine's definition) will necessarily change the template hash that should be used to instantiate the Descartes computation within the smart contract.
+
+> **NOTE**: as noted in the [documentation](https://docs.cartesi.io/machine/host/cmdline#flash-drives), the `genext2fs` command used to generate `ext2` file-systems is *non-reproducible*, meaning that the resulting hash of the stored Cartesi Machine template will differ each time a new `ext2` file is used, even if its contents are identical. Because of this, the template hash must be appropriately updated in the [GpgVerify.sol](./contracts/GpgVerify.sol) smart contract whenever a new `ext2` file is used.

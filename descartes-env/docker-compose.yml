@@ -13,7 +13,7 @@ services:
       - ethereum
 
   alice_dispatcher:
-    image: cartesi/descartes:0.1.1
+    image: cartesi/descartes:0.2.0
     restart: always
     environment:
       RUST_LOG: dispatcher=info,transaction=info,configuration=trace,utils=trace,state=info,descartes=trace
@@ -38,7 +38,7 @@ services:
           - dispatcher
 
   alice_logger:
-    image: cartesi/logger-server:0.3.0
+    image: cartesi/logger-server:0.4.0
     command: [ "-c", "/opt/cartesi/share/blockchain/node_modules/@cartesi/logger/build/contracts/Logger.json" ]
     volumes:
       - ./blockchain:/opt/cartesi/share/blockchain:ro
@@ -64,7 +64,7 @@ services:
           - machine-manager
 
   bob_dispatcher:
-    image: cartesi/descartes:0.1.1
+    image: cartesi/descartes:0.2.0
     restart: always
     environment:
       RUST_LOG: dispatcher=info,transaction=info,configuration=trace,utils=trace,state=info,descartes=trace
@@ -89,7 +89,7 @@ services:
           - dispatcher
 
   bob_logger:
-    image: cartesi/logger-server:0.3.0
+    image: cartesi/logger-server:0.4.0
     command: [ "-c", "/opt/cartesi/share/blockchain/node_modules/@cartesi/logger/build/contracts/Logger.json" ]
     volumes:
       - ./blockchain:/opt/cartesi/share/blockchain:ro

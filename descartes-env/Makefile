@@ -1,12 +1,12 @@
 .PHONY: clean deploy
 
-TAG := 0.1.1
+TAG := 0.2.0
 
 deploy:
 	docker-compose -f deployer.yml up --build
 
 release:
-	tar -czvf descartes-env-${TAG}.tar.gz --cd .. ./descartes-env
+	cd .. && tar -czvf descartes-env-${TAG}.tar.gz ./descartes-env
 
 clean:
 	rm -rf machines/*

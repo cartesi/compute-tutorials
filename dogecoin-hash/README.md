@@ -2,8 +2,6 @@
 
 This tutorial DApp uses the [scrypt](https://www.tarsnap.com/scrypt.html) algorithm to compute the proof-of-work hash for Dogecoin or Litecoin block headers. The resulting hash can then be compared to the target difficulty of the block, in order to validate it.
 
-> **NOTE**: at this time, this tutorial requires the latest unreleased features of [Descartes](https://github.com/cartesi/descartes). In order to use that unreleased version, you may [follow these instructions](../README.md#using-local-descartes-build-optional).
-
 
 ## Background
 
@@ -86,4 +84,4 @@ Finally, it is possible to build the Cartesi Machine itself like the other tutor
 $ ./build-cartesi-machine.sh ../../descartes-env/machines/
 ```
 
-> **NOTE**: as noted in the [documentation](https://docs.cartesi.io/machine/host/cmdline#flash-drives), the `genext2fs` command used to generate `ext2` file-systems is *non-reproducible*, meaning that the resulting hash of the stored Cartesi Machine template will differ each time a new `ext2` file is used, even if its contents are identical. Because of this, the  template hash must be appropriately updated in the [DogecoinHash.sol](./contracts/DogecoinHash.sol) smart contract whenever a new `ext2` file is used.
+> **NOTE**: as noted in the [documentation](https://docs.cartesi.io/machine/host/cmdline#flash-drives), the `genext2fs` command used to generate `ext2` file-systems is *non-reproducible*, meaning that the resulting hash of the stored Cartesi Machine template will differ each time a new `ext2` file is used, even if its contents are identical. Because of this, the template hash must be appropriately updated in the [DogecoinHash.sol](./contracts/DogecoinHash.sol) smart contract whenever a new `ext2` file is used.

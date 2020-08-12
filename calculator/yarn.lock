@@ -2,36 +2,36 @@
 # yarn lockfile v1
 
 
-"@cartesi/arbitration@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@cartesi/arbitration/-/arbitration-0.3.0.tgz#0e9e02b4b70293e78bbe66cd2793273ec5f23e4f"
-  integrity sha512-DVOYotbedsqUuri6U/HCC8Pqso4A8OFFCo3OOqzCVY5gqHAvebKuZjeE3u1hrXLDHbGxf+fPVS9KM6GLL+4p1g==
-  dependencies:
-    "@cartesi/util" "^0.2.1"
-
-"@cartesi/descartes-sdk@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@cartesi/descartes-sdk/-/descartes-sdk-0.1.1.tgz#87eeafc68192f7cdace27b2d4b2e9be961a7371b"
-  integrity sha512-bzq83GoaqrP7T72y90VYLF7zmbHdUfrPmDF0MggITiZWk8LgUlT0vsRojg1jSYAfKO3XGFSar8Xyc4bgdUq7uA==
-  dependencies:
-    "@cartesi/arbitration" "^0.3.0"
-    "@cartesi/logger" "^0.3.0"
-    "@cartesi/machine-solidity-step" "^0.4.0"
-    "@cartesi/util" "^0.2.1"
-
-"@cartesi/logger@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@cartesi/logger/-/logger-0.3.0.tgz#6d417018df40aefead2b0079ad7d186c74bb8525"
-  integrity sha512-Z9W93/cV/ZKhJ9bDxwFiMVgAV5bMyidAgRVRf+s3o73k9Z70Faj/Afmjm/Cex9y7ZLFykwXKbuYBb5op9NHY0Q==
-  dependencies:
-    "@cartesi/util" "^0.2.1"
-
-"@cartesi/machine-solidity-step@^0.4.0":
+"@cartesi/arbitration@^0.4.0":
   version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@cartesi/machine-solidity-step/-/machine-solidity-step-0.4.0.tgz#97396cca8cdf940c2d4ed61d24f3db3ea1d6812f"
-  integrity sha512-NugoV9mdpqXKki2XRqoLkI48D3Ira63iqsMVikJIt22Ul2nPZRxJR0e9aPzF2vJ+gxqKDC3EKMTXFdime9Rlpg==
+  resolved "https://registry.yarnpkg.com/@cartesi/arbitration/-/arbitration-0.4.0.tgz#ed44d66483cb4c36457f46d215a377b0cf0ede6c"
+  integrity sha512-zYXqzxh+BkAgDdb4i5EWzNPuQ3IUH+6FBn4J+S30OWYjwEU+iC7g1MJlxZaKd59f60dsFM8CMyDzCBs3badUjg==
   dependencies:
-    "@cartesi/arbitration" "^0.3.0"
+    "@cartesi/util" "^0.2.1"
+
+"@cartesi/descartes-sdk@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@cartesi/descartes-sdk/-/descartes-sdk-0.2.0.tgz#d0a55bedeff1db0d3d25b158327a3d256e8e6e3d"
+  integrity sha512-27RrXX6ameYb9lFz7mqMdOrVScRnbw0uTiowL5W0RBbIXp8pv0tj7UJPI+Hitgmwlp6wLWjVz7+NhJJqzGg1Mw==
+  dependencies:
+    "@cartesi/arbitration" "^0.4.0"
+    "@cartesi/logger" "^0.4.0"
+    "@cartesi/machine-solidity-step" "^0.4.1"
+    "@cartesi/util" "^0.2.1"
+
+"@cartesi/logger@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@cartesi/logger/-/logger-0.4.0.tgz#b03d8da887c155e61a50c4fb0fd71151582d4f57"
+  integrity sha512-3T94MFW3xL/wlr0BC5zTu3pS7qwBlLev+zCUCpBfbK3C88ex+N4mQoFIXhCu7yseO6XUabxW75y2o11GmiIs3g==
+  dependencies:
+    "@cartesi/util" "^0.2.1"
+
+"@cartesi/machine-solidity-step@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@cartesi/machine-solidity-step/-/machine-solidity-step-0.4.1.tgz#d4def4053338ff73af2e4a2a91036912938c159e"
+  integrity sha512-8FcX6UmjWbyYe3iTffFgbMFKfPS1Y6rbvW6mAMfKJ5paLjYqTivoWN/Oh6o4LzAl6+TlzDfyAKoCOq8Z1FWV0Q==
+  dependencies:
+    "@cartesi/arbitration" "^0.4.0"
     "@cartesi/util" "^0.2.1"
 
 "@cartesi/util@^0.2.1":
@@ -3435,10 +3435,10 @@ tough-cookie@~2.5.0:
     psl "^1.1.28"
     punycode "^2.1.1"
 
-truffle@^5.1.32:
-  version "5.1.36"
-  resolved "https://registry.yarnpkg.com/truffle/-/truffle-5.1.36.tgz#d49c9e0c20558bdee76f442663f81367f62c5559"
-  integrity sha512-BXfDrRJmxECsHFu1ZHeQNDdv3OA3vmwQ6Wp5m9yaE0swKcHS+gd8sBdxQBoliiAI0xvUAsD62PRGowqFfT1CLg==
+truffle@^5.1.37:
+  version "5.1.39"
+  resolved "https://registry.yarnpkg.com/truffle/-/truffle-5.1.39.tgz#3d01009e4ab6555e8e03c2c5a205e5579f84d763"
+  integrity sha512-khxuNG7clgxNcAZpnN+QYegJ4doM/Adc4wW/Z+ree1iqrRPl01GvN15JNJq1cWWRKLfCuYxCiwkSaN+Em2raSQ==
   dependencies:
     app-module-path "^2.2.0"
     mocha "8.0.1"

@@ -6,11 +6,11 @@
     "test": "test"
   },
   "dependencies": {
-    "@cartesi/descartes-sdk": "^0.1.1"
+    "@cartesi/descartes-sdk": "^0.2.0"
   },
   "devDependencies": {
-    "@truffle/contract": "^4.2.14",
-    "truffle": "^5.1.32"
+    "@truffle/contract": "^4.2.10",
+    "truffle": "^5.1.37"
   },
   "scripts": {
     "build": "truffle compile",

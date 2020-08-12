@@ -8,14 +8,13 @@ contract GenericScript {
 
     DescartesInterface descartes;
 
-    uint256 finalTime = 1e13;
     bytes32 templateHash = 0x86374a11e83ac937078f753332e90966fb358fbf229040d2b17a08a476a6a54d;
     uint64 outputPosition = 0xa000000000000000;
     uint64 outputLog2Size = 10;
+    uint256 finalTime = 1e13;
     uint256 roundDuration = 45;
 
-    uint64 scriptLog2Size = 10;
-
+    // generic script to execute
     bytes script = "#!/usr/bin/lua\n\
         function fact (n)\n\
             if n <= 0 then\n\
@@ -24,9 +23,11 @@ contract GenericScript {
                 return n * fact(n-1)\n\
             end\n\
         end\n\
-        print(fact(10))\n\
+        print(fact(20))\n\
     ";
 
+    // defines script size as 1024 bytes
+    uint64 scriptLog2Size = 10;
 
     constructor(address descartesAddress) public {
         descartes = DescartesInterface(descartesAddress);
@@ -37,7 +38,7 @@ contract GenericScript {
         // specifies an input drive containing the script
         DescartesInterface.Drive[] memory drives = new DescartesInterface.Drive[](1);
         drives[0] = DescartesInterface.Drive(
-            0x9000000000000000,    // 2nd drive position: 1st is the root filesystem (0x80..0)
+            0x9000000000000000,    // 2nd drive position: 1st is the root file-system (0x8000..)
             scriptLog2Size,        // driveLog2Size
             script,                // directValue
             0x00,                  // loggerRootHash

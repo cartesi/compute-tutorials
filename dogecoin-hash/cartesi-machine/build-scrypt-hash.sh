@@ -13,6 +13,7 @@ docker run \
   -w /home/$(id -u -n) \
   --rm $CARTESI_PLAYGROUND_DOCKER /bin/bash -c '\
     riscv64-unknown-linux-gnu-gcc -O2 -o scrypt-hash scrypt-hash.c -Wl,-rpath=.  -Llibscrypt -lscrypt ;\
+    mkdir -p ext2 ;\
     cp scrypt-hash ext2 ;\
     cp libscrypt/libscrypt.so.0 ext2 ;\
     genext2fs -b 1024 -d ext2 scrypt-hash.ext2 ;\

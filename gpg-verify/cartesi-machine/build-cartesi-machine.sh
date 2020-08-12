@@ -30,10 +30,10 @@ docker run \
     --initial-hash \
     --store="$MACHINE_TEMP_DIR" \
     --flash-drive="label:dapp-data,filename:dapp-data.ext2" \
-    --flash-drive="label:doc,length:1<<12" \
+    --flash-drive="label:document,length:1<<12" \
     --flash-drive="label:signature,length:1<<12" \
     --flash-drive="label:output,length:1<<12" \
-    -- $'date -s \'2020-07-25\' && /mnt/dapp-data/gpg-verify.sh'
+    -- $'date -s \'2100-01-01\' && /mnt/dapp-data/gpg-verify.sh'
 
 # moves stored machine to a folder within $MACHINES_DIR named after the machine's hash
 mv $MACHINE_TEMP_DIR $MACHINES_DIR/$(docker run \

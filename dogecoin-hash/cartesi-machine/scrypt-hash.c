@@ -22,7 +22,8 @@ void swap_bytes(uint8_t *buf, int buf_size)
 
 int main(int argc, char *argv[])
 {
-    // general definitions for scrypt hash
+    // general definitions for scrypt hash, as defined by the Litecoin specification
+    // ref: https://litecoin.info/index.php/Block_hashing_algorithm
     const int INPUT_SIZE = 80;   // block header data: concatenation of Version, Prev Hash, Merkle Root, Timestamp, Bits, Nonce
     const int OUTPUT_SIZE = 32;  // hash output size
     const int N = 1024;
@@ -74,6 +75,7 @@ int main(int argc, char *argv[])
 
 
     // COMPUTES HASH USING SCRYPT
+    // obs: salt is the same as the input (https://litecoin.info/index.php/Scrypt)
     printf("Computing scrypt hash...\n");
     int retval = libscrypt_scrypt(input, INPUT_SIZE, input, INPUT_SIZE, N, r, p, output, OUTPUT_SIZE);
     if(retval != 0)

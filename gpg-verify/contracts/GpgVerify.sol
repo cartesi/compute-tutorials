@@ -8,18 +8,18 @@ contract GpgVerify {
 
     DescartesInterface descartes;
 
-    // this DApp has an ext2 file-system (at 0x90..00) and two input drives (at 0xa0..00 and 0xb0..00), so the output will be at 0xc0..00
+    bytes32 templateHash = 0x368aca58c884ef4ce2fa5c58b3f859ce8d001e725706f2d1e329fa1d7ae72f52;
+
+    // this DApp has an ext2 file-system (at 0x9000..) and two input drives (at 0xa000.. and 0xb000..), so the output will be at 0xc000..
     uint64 outputPosition = 0xc000000000000000;
     // output will be "0" (success, no errors), "1" (failure), or some other error code that certainly fits into the minimum size of 32 bytes
     uint64 outputLog2Size = 5;
-
-    bytes32 templateHash = 0x3216779ec9659f48e7ec0b96342e4ae4b4a2e2f98813b75a9a7668e74dcf082f;
 
     uint256 finalTime = 1e13;
     uint256 roundDuration = 45;
 
     // document that was signed
-    bytes doc = "My public statement\n";
+    bytes document = "My public statement\n";
 
     // detached signature for the document, produced with a private key
     // - the DApp off-chain code must contain the corresponding public key in order to verify the signature
@@ -36,29 +36,29 @@ contract GpgVerify {
 
     // corresponding document and signature data to be sent as input drives to the off-chain Cartesi Machine
     // - this machine expects the first two bytes of the input data to encode the length of the content of interest
-    bytes docData = new bytes(1024);
+    bytes documentData = new bytes(1024);
     bytes signatureData = new bytes(1024);
 
     constructor(address descartesAddress) public {
         descartes = DescartesInterface(descartesAddress);
 
         // prepares data: computation expects input data to be prepended by two bytes that encode the length of the content
-        prepareData(doc, docData);
-        prepareData(signature, signatureData);
+        prependDataWithContentLength(document, documentData);
+        prependDataWithContentLength(signature, signatureData);
     }
 
-    function prepareData(bytes storage input, bytes storage data) internal {
+    function prependDataWithContentLength(bytes storage input, bytes storage output) internal {
         // length is assumed to fit in two bytes
         assert(input.length <= 0xffff);
 
-        // sets first two bytes in "data" as the input length
+        // sets first two bytes in output as the input length
         bytes memory inputLength = abi.encodePacked(input.length);
-        data[0] = inputLength[inputLength.length-2];
-        data[1] = inputLength[inputLength.length-1];
+        output[0] = inputLength[inputLength.length-2];
+        output[1] = inputLength[inputLength.length-1];
 
-        // subsequent bytes in "data" are the input bytes themselves
-        for (uint i = 0; i < input.length && i+2 < data.length; i++) {
-          data[i+2] = input[i];
+        // subsequent bytes in output are the input bytes themselves
+        for (uint i = 0; i < input.length && i+2 < output.length; i++) {
+          output[i+2] = input[i];
         }
     }
 
@@ -67,16 +67,16 @@ contract GpgVerify {
         // specifies two input drives containing the document and the signature
         DescartesInterface.Drive[] memory drives = new DescartesInterface.Drive[](2);
         drives[0] = DescartesInterface.Drive(
-            0xa000000000000000,    // position
+            0xa000000000000000,    // 3rd drive position: 1st is the root file-system (0x8000..), 2nd is the dapp-data file-system (0x9000..)
             10,                    // driveLog2Size
-            docData,               // directValue
+            documentData,          // directValue
             0x00,                  // loggerRootHash
             claimer,               // provider
             false,                 // waitsProvider
             false                  // needsLogger
         );
         drives[1] = DescartesInterface.Drive(
-            0xb000000000000000,    // position
+            0xb000000000000000,    // 4th drive position
             10,                    // driveLog2Size
             signatureData,         // directValue
             0x00,                  // loggerRootHash

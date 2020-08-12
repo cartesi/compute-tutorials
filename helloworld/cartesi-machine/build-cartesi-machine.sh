@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # general definitions
 MACHINES_DIR=.
 MACHINE_TEMP_DIR=__temp_machine
@@ -23,14 +24,12 @@ docker run \
   -e UID=$(id -u) \
   -e GID=$(id -g) \
   -v `pwd`:/home/$(id -u -n) \
-  -h playground \
   -w /home/$(id -u -n) \
   --rm $CARTESI_PLAYGROUND_DOCKER cartesi-machine \
-    --append-rom-bootargs="quiet" \
-    --flash-drive="label:output,length:1<<12" \
     --max-mcycle=0 \
     --initial-hash \
     --store="$MACHINE_TEMP_DIR" \
+    --flash-drive="label:output,length:1<<12" \
     -- $'echo Hello World! | dd status=none of=$(flashdrive output)'
 
 # moves stored machine to a folder within $MACHINES_DIR named after the machine's hash

@@ -8,22 +8,26 @@ contract DogecoinHash {
 
     DescartesInterface descartes;
 
-    uint256 finalTime = 1e13;
     bytes32 templateHash = 0x8bc459031809fcb366953f8373b3f202450ecbae51f3f724354480638725ff38;
+
+    // this DApp has an ext2 file-system (at 0x9000..) and an input drives (at 0xa000), so the output will be at 0xb000..
     uint64 outputPosition = 0xb000000000000000;
+    // output hash has 32 bytes
     uint64 outputLog2Size = 5;
+
+    uint256 finalTime = 1e13;
     uint256 roundDuration = 45;
 
-    
-    // data for DOGE block #100000 (https://dogechain.info/block/100000)
-    bytes4 version = 0x00000002;
-    bytes32 prevBlock = 0x12aca0938fe1fb786c9e0e4375900e8333123de75e240abd3337d1b411d14ebe;
-    bytes32 merkleRootHash = 0x31757c266102d1bee62ef2ff8438663107d64bdd5d9d9173421ec25fb2a814de;
-    bytes4 timestamp = 0x52fd869d;         // 2014-02-13 18:59:41 -0800, which is timestamp 1392346781 in decimal
-    bytes4 difficultyBits = 0x1b267eeb;
-    bytes4 nonce = 0x84214800;             // 2216773632 in decimal
+    // header data for DOGE block #100000 (https://dogechain.info/block/100000)
+    bytes4 version = 0x20000000;
+    bytes32 prevBlock = 0xb417303fb9ac36d8323050124d7298827e1da58cd1f66cb8d0aea8caf37d9095;
+    bytes32 merkleRootHash = 0x3e17b9b078117ea1f51bd0f8ac9a346cb99ee0bc97c97fa93d7d789311f442e9;
+    bytes4 timestamp = 0x5f189264;         // 2020-07-22 19:24:20, which is timestamp 1595445860 in decimal
+    bytes4 difficultyBits = 0x1a01cd2d;
+    bytes4 nonce = 0x84dd91a8;
 
-    // creates header bytes: actual size is 80, next power of 2 size is 128
+    // input data for the scrypt hashing algorithm, based on the header info
+    // - actual size is 80 bytes, next power of 2 size is 128
     bytes headerData = new bytes(128);
     uint64 headerDataLog2Size = 7;
 
@@ -31,7 +35,7 @@ contract DogecoinHash {
     constructor(address descartesAddress) public {
         descartes = DescartesInterface(descartesAddress);
 
-        // inserts info into headerData
+        // defines headerData by concatenating block header fields
         uint iHeader = 0;
         uint i;
         for (i = 0; i < version.length; i++)        {headerData[iHeader++] = version[i];}
@@ -44,10 +48,10 @@ contract DogecoinHash {
 
     function instantiate(address claimer, address challenger) public returns (uint256) {
 
-        // specifies an input drive containing the script
+        // specifies an input drive with the header data to be hashed using scrypt
         DescartesInterface.Drive[] memory drives = new DescartesInterface.Drive[](1);
         drives[0] = DescartesInterface.Drive(
-            0xa000000000000000,    // 3rd drive position: 1st is the root filesystem (0x80..0), 2nd is the mounted ext2 filesystem (0x90..0)
+            0xa000000000000000,    // 3rd drive position: 1st is the root file-system (0x8000..), 2nd is the mounted ext2 filesystem (0x9000..)
             headerDataLog2Size,    // driveLog2Size
             headerData,            // directValue
             0x00,                  // loggerRootHash

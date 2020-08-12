@@ -2,36 +2,36 @@
 # yarn lockfile v1
 
 
-"@cartesi/arbitration@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@cartesi/arbitration/-/arbitration-0.3.0.tgz#0e9e02b4b70293e78bbe66cd2793273ec5f23e4f"
-  integrity sha512-DVOYotbedsqUuri6U/HCC8Pqso4A8OFFCo3OOqzCVY5gqHAvebKuZjeE3u1hrXLDHbGxf+fPVS9KM6GLL+4p1g==
-  dependencies:
-    "@cartesi/util" "^0.2.1"
-
-"@cartesi/descartes-sdk@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@cartesi/descartes-sdk/-/descartes-sdk-0.1.1.tgz#87eeafc68192f7cdace27b2d4b2e9be961a7371b"
-  integrity sha512-bzq83GoaqrP7T72y90VYLF7zmbHdUfrPmDF0MggITiZWk8LgUlT0vsRojg1jSYAfKO3XGFSar8Xyc4bgdUq7uA==
-  dependencies:
-    "@cartesi/arbitration" "^0.3.0"
-    "@cartesi/logger" "^0.3.0"
-    "@cartesi/machine-solidity-step" "^0.4.0"
-    "@cartesi/util" "^0.2.1"
-
-"@cartesi/logger@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@cartesi/logger/-/logger-0.3.0.tgz#6d417018df40aefead2b0079ad7d186c74bb8525"
-  integrity sha512-Z9W93/cV/ZKhJ9bDxwFiMVgAV5bMyidAgRVRf+s3o73k9Z70Faj/Afmjm/Cex9y7ZLFykwXKbuYBb5op9NHY0Q==
-  dependencies:
-    "@cartesi/util" "^0.2.1"
-
-"@cartesi/machine-solidity-step@^0.4.0":
+"@cartesi/arbitration@^0.4.0":
   version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@cartesi/machine-solidity-step/-/machine-solidity-step-0.4.0.tgz#97396cca8cdf940c2d4ed61d24f3db3ea1d6812f"
-  integrity sha512-NugoV9mdpqXKki2XRqoLkI48D3Ira63iqsMVikJIt22Ul2nPZRxJR0e9aPzF2vJ+gxqKDC3EKMTXFdime9Rlpg==
+  resolved "https://registry.yarnpkg.com/@cartesi/arbitration/-/arbitration-0.4.0.tgz#ed44d66483cb4c36457f46d215a377b0cf0ede6c"
+  integrity sha512-zYXqzxh+BkAgDdb4i5EWzNPuQ3IUH+6FBn4J+S30OWYjwEU+iC7g1MJlxZaKd59f60dsFM8CMyDzCBs3badUjg==
   dependencies:
-    "@cartesi/arbitration" "^0.3.0"
+    "@cartesi/util" "^0.2.1"
+
+"@cartesi/descartes-sdk@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@cartesi/descartes-sdk/-/descartes-sdk-0.2.0.tgz#d0a55bedeff1db0d3d25b158327a3d256e8e6e3d"
+  integrity sha512-27RrXX6ameYb9lFz7mqMdOrVScRnbw0uTiowL5W0RBbIXp8pv0tj7UJPI+Hitgmwlp6wLWjVz7+NhJJqzGg1Mw==
+  dependencies:
+    "@cartesi/arbitration" "^0.4.0"
+    "@cartesi/logger" "^0.4.0"
+    "@cartesi/machine-solidity-step" "^0.4.1"
+    "@cartesi/util" "^0.2.1"
+
+"@cartesi/logger@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@cartesi/logger/-/logger-0.4.0.tgz#b03d8da887c155e61a50c4fb0fd71151582d4f57"
+  integrity sha512-3T94MFW3xL/wlr0BC5zTu3pS7qwBlLev+zCUCpBfbK3C88ex+N4mQoFIXhCu7yseO6XUabxW75y2o11GmiIs3g==
+  dependencies:
+    "@cartesi/util" "^0.2.1"
+
+"@cartesi/machine-solidity-step@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@cartesi/machine-solidity-step/-/machine-solidity-step-0.4.1.tgz#d4def4053338ff73af2e4a2a91036912938c159e"
+  integrity sha512-8FcX6UmjWbyYe3iTffFgbMFKfPS1Y6rbvW6mAMfKJ5paLjYqTivoWN/Oh6o4LzAl6+TlzDfyAKoCOq8Z1FWV0Q==
+  dependencies:
+    "@cartesi/arbitration" "^0.4.0"
     "@cartesi/util" "^0.2.1"
 
 "@cartesi/util@^0.2.1":
@@ -173,20 +173,21 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@truffle/blockchain-utils@^0.0.22":
-  version "0.0.22"
-  resolved "https://registry.yarnpkg.com/@truffle/blockchain-utils/-/blockchain-utils-0.0.22.tgz#c66a906cb60dbf72eaf85b0ad088ba9f45eff793"
-  integrity sha512-YyIQPMjFn/Ch8gARX+m8NJAlQecPkFRjHv0oHpZi1LlNGZ52vEt21z0ZelAu5ti6nQJ2Us6mE4BNyywfrqgiAA==
+"@truffle/blockchain-utils@^0.0.24":
+  version "0.0.24"
+  resolved "https://registry.yarnpkg.com/@truffle/blockchain-utils/-/blockchain-utils-0.0.24.tgz#2a9ead2f8f47b1384d010753a2553ae7868964ae"
+  integrity sha512-DBdypGaMK7YjBup1Q7d8gS9Y6covhSDTeCROIVLlrIZvYxBeHsFWizMpaIGqfZHx3hpDlE2nY5o7Bl0znRPHBg==
   dependencies:
     source-map-support "^0.5.19"
 
-"@truffle/codec@^0.5.9":
-  version "0.5.9"
-  resolved "https://registry.yarnpkg.com/@truffle/codec/-/codec-0.5.9.tgz#eea2c9d41c9daeca25ce7f6c379d07f129f2f2f9"
-  integrity sha512-W9YTUYttpiL9w770Mu+viOK7dgUE1ClX6iFo5YdJMwBQg2jkX+pjXLcYLJtD6657GHlhVQEnZCHztFIzG9FiHw==
+"@truffle/codec@^0.5.12":
+  version "0.5.12"
+  resolved "https://registry.yarnpkg.com/@truffle/codec/-/codec-0.5.12.tgz#509d3737e4be79df5547f7f2780857b486c58e3e"
+  integrity sha512-ikaTSjKKY10rFNj1k4+Qkettk6PXumlZfgfscbPZyYLPFJHSQ1dfx6DWrAH5bRSomEbe3MDDpq7Ld1JdZrzLzw==
   dependencies:
     big.js "^5.2.2"
     bn.js "^4.11.8"
+    borc "^2.1.2"
     debug "^4.1.0"
     lodash.clonedeep "^4.5.0"
     lodash.escaperegexp "^4.1.2"
@@ -206,16 +207,16 @@
     crypto-js "^3.1.9-1"
     debug "^4.1.0"
 
-"@truffle/contract@^4.2.14":
-  version "4.2.14"
-  resolved "https://registry.yarnpkg.com/@truffle/contract/-/contract-4.2.14.tgz#00ab5e16b5470f07862176ca7b091910062821bc"
-  integrity sha512-LGkfFXIjTNUZuf59Kh1V8bYR7nIQXPTDqzv3ew3bkP15mQWbL0xp9fSjLE1ZrC8MXzmXYXPDGSzlHAv8Fjkaxg==
+"@truffle/contract@^4.2.10":
+  version "4.2.17"
+  resolved "https://registry.yarnpkg.com/@truffle/contract/-/contract-4.2.17.tgz#679c0cbc24b49044d64031fc7ba07e514a3fc7b1"
+  integrity sha512-tj2UclP5URSaBcA/6TM0Wq9h5ivDq8UmbEvdHN7inrmi7SCRFDE1fR80crlbc17T6NctMw7PJ0t8ZRKbe3GOgQ==
   dependencies:
-    "@truffle/blockchain-utils" "^0.0.22"
+    "@truffle/blockchain-utils" "^0.0.24"
     "@truffle/contract-schema" "^3.2.3"
-    "@truffle/debug-utils" "^4.2.1"
+    "@truffle/debug-utils" "^4.2.4"
     "@truffle/error" "^0.0.8"
-    "@truffle/interface-adapter" "^0.4.13"
+    "@truffle/interface-adapter" "^0.4.15"
     bignumber.js "^7.2.1"
     ethereum-ens "^0.8.0"
     ethers "^4.0.0-beta.1"
@@ -226,17 +227,17 @@
     web3-eth-abi "1.2.1"
     web3-utils "1.2.1"
 
-"@truffle/debug-utils@^4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@truffle/debug-utils/-/debug-utils-4.2.1.tgz#f8031df147fd1c3f58f32e40120408b91dbc406d"
-  integrity sha512-OKy9dzCbbx0G1t7xfYyi2VvP+kM6gnJRPt8cjphio2vdZGuy3sB3PjL+8ILsHWyOeFluNJp+rFdAQWjjspEb9A==
+"@truffle/debug-utils@^4.2.4":
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/@truffle/debug-utils/-/debug-utils-4.2.4.tgz#d399b05812d32770d72789738cad0b1ecca51e5f"
+  integrity sha512-rzYQrUE7zjs4Pg/aGosyCHbfK3A/+kONtj3bdS50K1mdxnrsExC6zQYTIdjT0a6iAWTGLGVbseWqTLnYuKFDGQ==
   dependencies:
-    "@truffle/codec" "^0.5.9"
+    "@truffle/codec" "^0.5.12"
     "@trufflesuite/chromafi" "^2.1.2"
     chalk "^2.4.2"
     debug "^4.1.0"
     highlight.js "^9.15.8"
-    highlightjs-solidity "^1.0.17"
+    highlightjs-solidity "^1.0.18"
     node-dir "0.1.17"
 
 "@truffle/error@^0.0.8":
@@ -244,10 +245,10 @@
   resolved "https://registry.yarnpkg.com/@truffle/error/-/error-0.0.8.tgz#dc94ca36393403449d4b7461bf9452c241e53ec1"
   integrity sha512-x55rtRuNfRO1azmZ30iR0pf0OJ6flQqbax1hJz+Avk1K5fdmOv5cr22s9qFnwTWnS6Bw0jvJEoR0ITsM7cPKtQ==
 
-"@truffle/interface-adapter@^0.4.13":
-  version "0.4.13"
-  resolved "https://registry.yarnpkg.com/@truffle/interface-adapter/-/interface-adapter-0.4.13.tgz#19623f222d472ed5906a1c0c58cdf5b5a9d4bee8"
-  integrity sha512-N4TDtTvDan8Zo1csU2Otk2t0O7nOi7UP4dCfpDB5WVnD/7B07iT2getU3iRmLm4ZgwUY8VxHgDptdP55ACWCRg==
+"@truffle/interface-adapter@^0.4.15":
+  version "0.4.15"
+  resolved "https://registry.yarnpkg.com/@truffle/interface-adapter/-/interface-adapter-0.4.15.tgz#027cc30e6ad0823e0c15f109274124d49ed6c9e9"
+  integrity sha512-0EKUwiU5MZ9EqnideG9bHAEUwgGeo5zpSzAKDwgc/vMxJqAM00+HLro01fFfMItZSPqRh5ro4xP3hEiIXJpz+Q==
   dependencies:
     bn.js "^4.11.8"
     ethers "^4.0.32"
@@ -556,6 +557,19 @@ boolbase@~1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
 
+borc@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/borc/-/borc-2.1.2.tgz#6ce75e7da5ce711b963755117dd1b187f6f8cf19"
+  integrity sha512-Sy9eoUi4OiKzq7VovMn246iTo17kzuyHJKomCfpWMlI6RpfN1gk95w7d7gH264nApVLg0HZfcpz62/g4VH1Y4w==
+  dependencies:
+    bignumber.js "^9.0.0"
+    buffer "^5.5.0"
+    commander "^2.15.0"
+    ieee754 "^1.1.13"
+    iso-url "~0.4.7"
+    json-text-sequence "~0.1.0"
+    readable-stream "^3.6.0"
+
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
@@ -835,6 +849,11 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
+commander@^2.15.0:
+  version "2.20.3"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
+  integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
+
 commander@~2.8.1:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.8.1.tgz#06be367febfda0c330aa1e2a072d3dc9762425d4"
@@ -1086,6 +1105,11 @@ delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
+
+delimit-stream@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/delimit-stream/-/delimit-stream-0.1.0.tgz#9b8319477c0e5f8aeb3ce357ae305fc25ea1cd2b"
+  integrity sha1-m4MZR3wOX4rrPONXrjBfwl6hzSs=
 
 depd@~1.1.2:
   version "1.1.2"
@@ -1910,10 +1934,10 @@ highlight.js@^9.12.0, highlight.js@^9.15.8:
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.18.1.tgz#ed21aa001fe6252bb10a3d76d47573c6539fe13c"
   integrity sha512-OrVKYz70LHsnCgmbXctv/bfuvntIKDz177h0Co37DQ5jamGZLVmoCVMtjMtNZY3X9DrCcKfklHPNeA0uPZhSJg==
 
-highlightjs-solidity@^1.0.17:
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/highlightjs-solidity/-/highlightjs-solidity-1.0.17.tgz#275539422d9675a80f958b6f0f3ad59037a6ccb9"
-  integrity sha512-QHSoGDjsfFDBraXtHKdJj2xXlu0fpG2ycZI4woNXLOennJbER2zX5cJL8xdRKQ9kk0q76kt86NgAyMRkttfPQw==
+highlightjs-solidity@^1.0.18:
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/highlightjs-solidity/-/highlightjs-solidity-1.0.18.tgz#3deb0593689a26fbadf98e631bf2cd305a6417c9"
+  integrity sha512-k15h0br4oCRT0F0jTRuZbimerVt5V4n0k25h7oWi0kVqlBNeXPbSr5ddw02/2ukJmYfB8jauFDmxSauJjwM7Eg==
 
 hmac-drbg@^1.0.0:
   version "1.0.1"
@@ -2000,7 +2024,7 @@ idna-uts46-hx@^2.3.1:
   dependencies:
     punycode "2.1.0"
 
-ieee754@^1.1.4:
+ieee754@^1.1.13, ieee754@^1.1.4:
   version "1.1.13"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.13.tgz#ec168558e95aa181fd87d37f55c32bbcb6708b84"
   integrity sha512-4vf7I2LYV/HaWerSo3XmlMkp5eZ83i+/CDluXi/IGTs/O1sejBNhTtnxzmRZfvOUqj7lZjqHkeTvpgSFDlWZTg==
@@ -2168,6 +2192,11 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
 
+iso-url@~0.4.7:
+  version "0.4.7"
+  resolved "https://registry.yarnpkg.com/iso-url/-/iso-url-0.4.7.tgz#de7e48120dae46921079fe78f325ac9e9217a385"
+  integrity sha512-27fFRDnPAMnHGLq36bWTpKET+eiXct3ENlCcdcMdk+mjXrb2kw3mhBUg1B7ewAC0kVzlOPhADzQgz1SE6Tglog==
+
 isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
@@ -2236,6 +2265,13 @@ json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
   integrity sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=
+
+json-text-sequence@~0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/json-text-sequence/-/json-text-sequence-0.1.1.tgz#a72f217dc4afc4629fff5feb304dc1bd51a2f3d2"
+  integrity sha1-py8hfcSvxGKf/1/rME3BvVGi89I=
+  dependencies:
+    delimit-stream "0.1.0"
 
 jsonfile@^4.0.0:
   version "4.0.0"
@@ -3435,10 +3471,10 @@ tough-cookie@~2.5.0:
     psl "^1.1.28"
     punycode "^2.1.1"
 
-truffle@^5.1.32:
-  version "5.1.36"
-  resolved "https://registry.yarnpkg.com/truffle/-/truffle-5.1.36.tgz#d49c9e0c20558bdee76f442663f81367f62c5559"
-  integrity sha512-BXfDrRJmxECsHFu1ZHeQNDdv3OA3vmwQ6Wp5m9yaE0swKcHS+gd8sBdxQBoliiAI0xvUAsD62PRGowqFfT1CLg==
+truffle@^5.1.37:
+  version "5.1.39"
+  resolved "https://registry.yarnpkg.com/truffle/-/truffle-5.1.39.tgz#3d01009e4ab6555e8e03c2c5a205e5579f84d763"
+  integrity sha512-khxuNG7clgxNcAZpnN+QYegJ4doM/Adc4wW/Z+ree1iqrRPl01GvN15JNJq1cWWRKLfCuYxCiwkSaN+Em2raSQ==
   dependencies:
     app-module-path "^2.2.0"
     mocha "8.0.1"

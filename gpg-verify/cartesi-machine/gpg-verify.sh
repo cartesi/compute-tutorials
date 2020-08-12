@@ -1,13 +1,16 @@
 #!/bin/sh
 
-# reads document data as a binary string whose length is encoded in the first 2 bytes, and stores it in file 'doc'
-dd status=none if=$(flashdrive doc) | lua -e 'io.write((string.unpack(">s2",  io.read("a"))))' > doc
+# reads document data as a binary string whose length is encoded in the first 2 bytes, and stores it in file 'document'
+dd status=none if=$(flashdrive document) | lua -e 'io.write((string.unpack(">s2",  io.read("a"))))' > document
 
 # reads signature data as a binary string whose length is encoded in the first 2 bytes, and stores it in file 'signature'
 dd status=none if=$(flashdrive signature) | lua -e 'io.write((string.unpack(">s2",  io.read("a"))))' > signature
 
-# verifies doc signature
-gpg --no-default-keyring --keyring /mnt/dapp-data/descartes-pub.key --verify signature doc
+# imports public key informing that it can be trusted (0xA86D9CB964EB527E is the key's LONG id)
+gpg --trusted-key 0xA86D9CB964EB527E --import /mnt/dapp-data/descartes-pub.key
 
-# writes gpg verification exit status to output (0 is success, 1 is error)
+# verifies document signature
+gpg --verify signature document
+
+# writes gpg verify's exit status to output: 0 is success, 1 is failure, other values indicate error
 echo $? > $(flashdrive output)
