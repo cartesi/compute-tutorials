@@ -1,3 +1,26 @@
+// Copyright (C) 2020 Cartesi Pte. Ltd.
+
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free Software
+// Foundation, either version 3 of the License, or (at your option) any later
+// version.
+
+// This program is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+// PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+// Note: This component currently has dependencies that are licensed under the GNU
+// GPL, version 3, and so you should treat this component as a whole as being under
+// the GPL version 3. But all Cartesi-written code in this component is licensed
+// under the Apache License, version 2, or a compatible permissive license, and can
+// be used independently under the Apache v2 license. After this component is
+// rewritten, the entire component will be released under the Apache v2 license.
+
+/// @title DogecoinHash
+/// @author Milton Jonathan
 pragma solidity >=0.4.25 <0.7.0;
 pragma experimental ABIEncoderV2;
 
@@ -19,12 +42,12 @@ contract DogecoinHash {
     uint256 roundDuration = 45;
 
     // header data for DOGE block #100000 (https://dogechain.info/block/100000)
-    bytes4 version = 0x20000000;
-    bytes32 prevBlock = 0xb417303fb9ac36d8323050124d7298827e1da58cd1f66cb8d0aea8caf37d9095;
-    bytes32 merkleRootHash = 0x3e17b9b078117ea1f51bd0f8ac9a346cb99ee0bc97c97fa93d7d789311f442e9;
-    bytes4 timestamp = 0x5f189264;         // 2020-07-22 19:24:20, which is timestamp 1595445860 in decimal
-    bytes4 difficultyBits = 0x1a01cd2d;
-    bytes4 nonce = 0x84dd91a8;
+    bytes4 version = 0x00000002;
+    bytes32 prevBlock = 0x12aca0938fe1fb786c9e0e4375900e8333123de75e240abd3337d1b411d14ebe;
+    bytes32 merkleRootHash = 0x31757c266102d1bee62ef2ff8438663107d64bdd5d9d9173421ec25fb2a814de;
+    bytes4 timestamp = 0x52fd869d;         // 2014-02-13 18:59:41 -0800, which is timestamp 1392346781 in decimal
+    bytes4 difficultyBits = 0x1b267eeb;
+    bytes4 nonce = 0x84214800;             // 2216773632 in decimal
 
     // input data for the scrypt hashing algorithm, based on the header info
     // - actual size is 80 bytes, next power of 2 size is 128
