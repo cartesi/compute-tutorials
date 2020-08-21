@@ -40,6 +40,11 @@ $ cd descartes-env
 $ docker-compose up
 ```
 
+ATTENTION: to shutdown the environment, remember to remove volumes when stopping the containers:
+```bash
+$ docker-compose down -v
+```
+
 
 ## Running a DApp tutorial
 

@@ -9,6 +9,7 @@ release:
 	cd .. && tar -czvf descartes-env-${TAG}.tar.gz ./descartes-env
 
 clean:
+	find ganache_data/ ! -path ganache_data/ ! -path ganache_data/.\* -name '*' -delete
 	rm -rf machines/*
-	rm -rf ganache_data/*
 	rm -rf blockchain/*
+	docker-compose down -v

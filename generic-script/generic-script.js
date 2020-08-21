@@ -27,7 +27,7 @@ module.exports = async (callback) => {
         let contractDeployed = await contractAbstraction.deployed();
         let accounts = await web3.eth.getAccounts();
 
-        console.log("Executing method '" + program.method + (program.method == "instantiate" ? "'\n" : "with index '" + program.index + "'\n"));
+        console.log("Executing method '" + program.method + (program.method == "instantiate" ? "'\n" : "' with index '" + program.index + "'\n"));
 
         switch (program.method) {
             case "instantiate":
