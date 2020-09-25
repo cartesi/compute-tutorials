@@ -10,6 +10,8 @@ release:
 
 clean:
 	find ganache_data/ ! -path ganache_data/ ! -path ganache_data/.\* -name '*' -delete
-	rm -rf machines/*
 	rm -rf blockchain/*
 	docker-compose down -v
+
+clean-all: clean
+	rm -rf machines/*
