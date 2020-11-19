@@ -5,8 +5,8 @@ RUN apk add --no-cache \
     build-base \
     git \
     openssl \
-    python \
-    python-dev \
+    python3 \
+    python3-dev \
     py-pip \
     rsync
 
