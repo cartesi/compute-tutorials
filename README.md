@@ -32,6 +32,15 @@ To initialize the local `ganache` network and deploy the `Descartes` smart contr
 $ cd descartes-env
 $ make deploy
 ```
+#### Setup environment for ARM
+
+To initialize on ARM run the same command as above but with the ARM flag
+
+```bash
+$ cd descartes-env
+$ make deploy-arm
+```
+
 (you should manually stop the ganache instance once deploy is complete)
 
 To run the entire environment, execute:
