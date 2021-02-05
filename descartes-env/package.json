@@ -1,21 +1,18 @@
 {
-  "name": "@cartesi/descartes-tutorials",
-  "version": "0.1.0",
-  "description": "Descartes Tutorials",
-  "directories": {
-    "test": "test"
-  },
+  "name": "@cartesi/descartes-env",
+  "description": "Descartes environment for local DApp development",
+  "version": "1.0.0",
   "dependencies": {
-    "@cartesi/descartes-sdk": "^0.2.0"
+    "@cartesi/descartes-sdk": "^1.0.0"
   },
   "devDependencies": {
-    "@truffle/contract": "^4.2.10",
-    "@truffle/hdwallet-provider": "^1.0.40",
-    "truffle": "^5.1.37"
-  },
-  "scripts": {
-    "build": "truffle compile",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "@nomiclabs/hardhat-ethers": "^2.0.1",
+    "ethers": "^5.0.24",
+    "hardhat": "^2.0.3",
+    "hardhat-deploy": "0.7.0-beta.35",
+    "ts-generator": "^0.1.1",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.1.2"
   },
   "repository": {
     "type": "git",

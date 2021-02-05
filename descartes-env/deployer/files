@@ -1,5 +1,0 @@
-node_modules/@cartesi/arbitration/build/contracts/PartitionInstantiator.json
-node_modules/@cartesi/arbitration/build/contracts/MMInstantiator.json
-node_modules/@cartesi/arbitration/build/contracts/VGInstantiator.json
-node_modules/@cartesi/descartes-sdk/build/contracts/Descartes.json
-node_modules/@cartesi/logger/build/contracts/Logger.json

@@ -1,62 +1,83 @@
 version: '3'
 services:
-  ganache:
-    image: trufflesuite/ganache-cli:v6.9.1
-    command: ["ganache-cli", "--mnemonic", "donor rather all fix tongue poverty camera oxygen have length thumb beach", "--db", "/ganache_data", "--networkId", "7777", "--accounts", "2"]
-    volumes:
-      - ./ganache_data:/ganache_data
+  hardhatnet:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      MNEMONIC: "test test test test test test test test test test test junk"
     expose:
       - 8545
     ports:
       - 8545:8545
+    volumes:
+      - ./deployments:/opt/cartesi/share/blockchain/deployments
     networks:
       - ethereum
 
   alice_dispatcher:
-    image: cartesi/descartes:0.2.0
+    image: cartesi/descartes:1.0.0
     restart: always
     environment:
-      RUST_LOG: dispatcher=info,transaction=info,configuration=trace,utils=trace,state=info,descartes=trace
-      WEB3_PROVIDER_URI: http://ganache:8545
-      MNEMONIC: "donor rather all fix tongue poverty camera oxygen have length thumb beach"
+      MNEMONIC: "test test test test test test test test test test test junk"
       ACCOUNT_INDEX: 0
+      RUST_LOG: dispatcher=info,transaction=info,configuration=trace,utils=trace,state=info,descartes=trace
+      WEB3_PROVIDER_URI: http://hardhatnet:8545
+      DEPLOYMENT_SEMAPHORE: http://hardhatnet:8545
       QUERY_PORT: 3001
-      ETHEREUM_HOST: ganache
-      ETHEREUM_PORT: 8545
       MACHINE_MANAGER_HOST: machine-manager
       MACHINE_MANAGER_PORT: 50051
       LOGGER_HOST: logger
       LOGGER_PORT: 50051
+      IPFS_HOST: ipfs
+      IPFS_PORT: 50051
       DOCKER: "TRUE"
+      RUST_BACKTRACE: 1
     volumes:
-      - ./blockchain:/opt/cartesi/share/blockchain:ro
+      - ./:/opt/cartesi/share/blockchain:ro
       - alice_data:/opt/cartesi/srv/descartes
     networks:
       ethereum: {}
       alice:
         aliases:
           - dispatcher
+    ports:
+      - "3001:3001"
 
   alice_logger:
-    image: cartesi/logger-server:0.4.0
-    command: [ "-c", "/opt/cartesi/share/blockchain/node_modules/@cartesi/logger/build/contracts/Logger.json" ]
+    image: cartesi/logger-server:0.6.2
+    command: [ "-c", "/opt/cartesi/share/blockchain/deployments/localhost/Logger.json" ]
     volumes:
-      - ./blockchain:/opt/cartesi/share/blockchain:ro
-      - alice_data:/opt/cartesi/srv/logger-server
+      - ./:/opt/cartesi/share/blockchain:ro
+      - alice_data:/opt/cartesi/srv/descartes
     environment:
-      WEB3_PROVIDER_URI: http://ganache:8545
-      MNEMONIC: "donor rather all fix tongue poverty camera oxygen have length thumb beach"
+      MNEMONIC: "test test test test test test test test test test test junk"
       ACCOUNT_INDEX: 0
+      WEB3_PROVIDER_URI: http://hardhatnet:8545
+      DEPLOYMENT_SEMAPHORE: http://hardhatnet:8545
     networks:
       ethereum: {}
       alice:
         aliases:
           - logger
 
+  alice_ipfs:
+    image: cartesi/ipfs-server:0.2.0
+    volumes:
+      - alice_data:/opt/cartesi/srv/descartes
+    networks:
+      ipfs: {}
+      alice:
+        aliases:
+          - ipfs
+    ports:
+        - "50051:50051"
+
   alice_machine_manager:
-    image: cartesi/machine-manager:0.4.1
+    image: cartesi/machine-manager:0.5.0
     volumes:
       - ./machines:/opt/cartesi/srv/descartes/cartesi-machine
+      - alice_data:/opt/cartesi/srv/descartes
     networks:
       ethereum: {}
       alice:
@@ -64,50 +85,68 @@ services:
           - machine-manager
 
   bob_dispatcher:
-    image: cartesi/descartes:0.2.0
+    image: cartesi/descartes:1.0.0
     restart: always
     environment:
-      RUST_LOG: dispatcher=info,transaction=info,configuration=trace,utils=trace,state=info,descartes=trace
-      WEB3_PROVIDER_URI: http://ganache:8545
-      MNEMONIC: "donor rather all fix tongue poverty camera oxygen have length thumb beach"
+      MNEMONIC: "test test test test test test test test test test test junk"
       ACCOUNT_INDEX: 1
+      RUST_LOG: dispatcher=info,transaction=info,configuration=trace,utils=trace,state=info,descartes=trace
+      WEB3_PROVIDER_URI: http://hardhatnet:8545
+      DEPLOYMENT_SEMAPHORE: http://hardhatnet:8545
       QUERY_PORT: 3001
-      ETHEREUM_HOST: ganache
-      ETHEREUM_PORT: 8545
       MACHINE_MANAGER_HOST: machine-manager
       MACHINE_MANAGER_PORT: 50051
       LOGGER_HOST: logger
       LOGGER_PORT: 50051
+      IPFS_HOST: ipfs
+      IPFS_PORT: 50051
       DOCKER: "TRUE"
+      RUST_BACKTRACE: 1
     volumes:
-      - ./blockchain:/opt/cartesi/share/blockchain:ro
+      - ./:/opt/cartesi/share/blockchain:ro
       - bob_data:/opt/cartesi/srv/descartes
     networks:
       ethereum: {}
       bob:
         aliases:
           - dispatcher
+    ports:
+      - "3002:3001"
 
   bob_logger:
-    image: cartesi/logger-server:0.4.0
-    command: [ "-c", "/opt/cartesi/share/blockchain/node_modules/@cartesi/logger/build/contracts/Logger.json" ]
+    image: cartesi/logger-server:0.6.2
+    command: [ "-c", "/opt/cartesi/share/blockchain/deployments/localhost/Logger.json" ]
     volumes:
-      - ./blockchain:/opt/cartesi/share/blockchain:ro
-      - bob_data:/opt/cartesi/srv/logger-server
+      - ./:/opt/cartesi/share/blockchain:ro
+      - bob_data:/opt/cartesi/srv/descartes
     environment:
-      WEB3_PROVIDER_URI: http://ganache:8545
-      MNEMONIC: "donor rather all fix tongue poverty camera oxygen have length thumb beach"
+      MNEMONIC: "test test test test test test test test test test test junk"
       ACCOUNT_INDEX: 1
+      WEB3_PROVIDER_URI: http://hardhatnet:8545
+      DEPLOYMENT_SEMAPHORE: http://hardhatnet:8545
     networks:
       ethereum: {}
       bob:
         aliases:
           - logger
 
+  bob_ipfs:
+    image: cartesi/ipfs-server:0.2.0
+    volumes:
+      - bob_data:/opt/cartesi/srv/descartes
+    networks:
+      ipfs: {}
+      bob:
+        aliases:
+          - ipfs
+    ports:
+        - "50052:50051"
+
   bob_machine_manager:
-    image: cartesi/machine-manager:0.4.1
+    image: cartesi/machine-manager:0.5.0
     volumes:
       - ./machines:/opt/cartesi/srv/descartes/cartesi-machine
+      - bob_data:/opt/cartesi/srv/descartes
     networks:
       ethereum: {}
       bob:
@@ -119,6 +158,7 @@ volumes:
   bob_data:
 
 networks:
+  ipfs:
   ethereum:
   alice:
   bob:
