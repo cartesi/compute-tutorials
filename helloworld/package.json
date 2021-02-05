@@ -1,20 +1,23 @@
 {
   "name": "@cartesi/descartes-tutorials-helloworld",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "HelloWorld Descartes DApp",
-  "directories": {
-    "test": "test"
-  },
   "dependencies": {
-    "@cartesi/descartes-sdk": "^0.2.0"
+    "@cartesi/descartes-sdk": "^1.0.0"
   },
   "devDependencies": {
-    "@truffle/contract": "^4.2.10",
-    "truffle": "^5.1.37"
+    "hardhat-deploy-ethers": "^0.3.0-beta.7",
+    "ethers": "^5.0.24",
+    "hardhat": "^2.0.3",
+    "hardhat-deploy": "0.7.0-beta.35",
+    "ts-generator": "^0.1.1",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.1.2"
   },
   "scripts": {
-    "build": "truffle compile",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "hardhat compile",
+    "deploy": "hardhat deploy --network localhost",
+    "console": "hardhat console --network localhost"
   },
   "repository": {
     "type": "git",
