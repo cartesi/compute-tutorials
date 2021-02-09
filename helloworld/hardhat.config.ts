@@ -1,4 +1,4 @@
-import { HardhatUserConfig } from "hardhat/config";
+import { HardhatUserConfig, task, types } from "hardhat/config";
 
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
@@ -35,5 +35,62 @@ const config: HardhatUserConfig = {
     },
   },
 };
+
+// TASKS
+
+// instantiate task
+task("instantiate", "Instantiate a HelloWorld computation").setAction(
+  async ({}, hre) => {
+    const { ethers } = hre;
+    const descartes = await ethers.getContract("Descartes");
+    const contract = await ethers.getContract("HelloWorld");
+
+    const { alice, bob } = await hre.getNamedAccounts();
+
+    const tx = await contract.instantiate([alice, bob]);
+
+    // retrieves created computation's index
+    const index = await new Promise((resolve) => {
+      descartes.on("DescartesCreated", (index) => resolve(index));
+    });
+
+    console.log(
+      `Instantiation successful with index '${index}' (tx: ${tx.hash} ; blocknumber: ${tx.blockNumber})\n`
+    );
+  }
+);
+
+// get-result task
+task("get-result", "Retrieves a HelloWorld computation result given its index")
+  .addOptionalParam("index", "The HelloWorld computation index", 0, types.int)
+  .setAction(async ({ index }, hre) => {
+    const { ethers } = hre;
+    const contract = await ethers.getContract("HelloWorld");
+
+    console.log("");
+    console.log("Getting result using index '" + index + "'\n");
+
+    const ret = await contract.getResult(index);
+    console.log("Full result: " + JSON.stringify(ret));
+    if (ret["3"]) {
+      console.log(
+        `Result value as string: ${ethers.utils.toUtf8String(ret["3"])}`
+      );
+    }
+    console.log("");
+  });
+
+// destruct task
+task("destruct", "Destructs a HelloWorld computation")
+  .addOptionalParam("index", "The HelloWorld computation index", 0, types.int)
+  .setAction(async ({ index }, hre) => {
+    const { ethers } = hre;
+    const contract = await ethers.getContract("HelloWorld");
+
+    const tx = await contract.destruct(index);
+    console.log(
+      `Destruction successful for index '${index}' (tx: ${tx.hash} ; blocknumber: ${tx.blockNumber})\n`
+    );
+  });
 
 export default config;
