@@ -1,5 +1,6 @@
 // Copyright (C) 2020 Cartesi Pte. Ltd.
 
+// SPDX-License-Identifier: GPL-3.0-only
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
@@ -21,7 +22,7 @@
 
 /// @title Calculator
 /// @author Milton Jonathan
-pragma solidity >=0.4.25 <0.7.0;
+pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
 import "@cartesi/descartes-sdk/contracts/DescartesInterface.sol";
@@ -31,21 +32,21 @@ contract Calculator {
 
     DescartesInterface descartes;
 
-    bytes32 templateHash = 0x88040f919276854d14efb58967e5c0cb2fa637ae58539a1c71c7b98b4f959baa;
+    bytes32 templateHash = 0xa278371ed8d52efa6aba9f825ba8130d2604b363b3ceb51c1bd3a210f400fd8a;
     uint64 outputPosition = 0xa000000000000000;
-    uint64 outputLog2Size = 10;
-    uint256 finalTime = 1e13;
-    uint256 roundDuration = 45;
+    uint8 outputLog2Size = 10;
+    uint256 finalTime = 1e11;
+    uint256 roundDuration = 51;
 
     // mathematical expression to evaluate
     bytes expression = "2^71 + 36^12";
-    uint64 expressionLog2Size = 5;
+    uint8 expressionLog2Size = 5;
 
-    constructor(address descartesAddress) public {
+    constructor(address descartesAddress) {
         descartes = DescartesInterface(descartesAddress);
     }
 
-    function instantiate(address claimer, address challenger) public returns (uint256) {
+    function instantiate(address[] memory parties) public returns (uint256) {
 
         // specifies an input drive containing the mathematical expression
         DescartesInterface.Drive[] memory drives = new DescartesInterface.Drive[](1);
@@ -53,8 +54,9 @@ contract Calculator {
             0x9000000000000000,    // 2nd drive position: 1st is the root file-system (0x8000..)
             expressionLog2Size,    // driveLog2Size
             expression,            // directValue
+            "",                    // loggerIpfsPath
             0x00,                  // loggerRootHash
-            claimer,               // provider
+            parties[0],            // provider
             false,                 // waitsProvider
             false                  // needsLogger
         );
@@ -66,8 +68,7 @@ contract Calculator {
             outputPosition,
             outputLog2Size,
             roundDuration,
-            claimer,
-            challenger,
+            parties,
             drives
         );
     }
