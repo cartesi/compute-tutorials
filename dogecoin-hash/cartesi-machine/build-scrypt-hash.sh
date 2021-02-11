@@ -1,5 +1,5 @@
 #!/bin/bash
-CARTESI_PLAYGROUND_DOCKER=cartesi/playground:0.1.1
+CARTESI_PLAYGROUND_DOCKER=cartesi/playground:0.3.0
 
 # uses playground to build and package the scrypt-hash application for the Cartesi Machine
 # - compiles "scrypt-hash" application, linking it to "libscrypt" (which should have been previously built)
@@ -12,7 +12,7 @@ docker run \
   -v `pwd`:/home/$(id -u -n) \
   -w /home/$(id -u -n) \
   --rm $CARTESI_PLAYGROUND_DOCKER /bin/bash -c '\
-    riscv64-unknown-linux-gnu-gcc -O2 -o scrypt-hash scrypt-hash.c -Wl,-rpath=.  -Llibscrypt -lscrypt ;\
+    riscv64-cartesi-linux-gnu-gcc -O2 -o scrypt-hash scrypt-hash.c -Wl,-rpath=.  -Llibscrypt -lscrypt ;\
     mkdir -p ext2 ;\
     cp scrypt-hash ext2 ;\
     cp libscrypt/libscrypt.so.0 ext2 ;\
