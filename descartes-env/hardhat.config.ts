@@ -1,7 +1,7 @@
 import { HardhatUserConfig } from "hardhat/config";
 
-import "@nomiclabs/hardhat-ethers";
 import "hardhat-deploy";
+import "hardhat-deploy-ethers";
 
 // read MNEMONIC from file or from env variable
 let mnemonic = process.env.MNEMONIC;
@@ -15,17 +15,6 @@ const config: HardhatUserConfig = {
   },
   solidity: {
     version: "0.7.4",
-    settings: {
-      optimizer: {
-        runs: 110,
-        enabled: true,
-      },
-    },
-  },
-  paths: {
-    artifacts: "artifacts",
-    deploy: "deploy",
-    deployments: "deployments",
   },
   external: {
     contracts: [
@@ -55,9 +44,6 @@ const config: HardhatUserConfig = {
   namedAccounts: {
     deployer: {
       default: 0,
-    },
-    proxy: {
-      default: 1,
     },
     alice: {
       default: 0,
