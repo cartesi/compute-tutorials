@@ -1,5 +1,5 @@
 #!/bin/bash
-CARTESI_PLAYGROUND_DOCKER=cartesi/playground:0.1.1
+CARTESI_PLAYGROUND_DOCKER=cartesi/playground:0.3.0
 
 # uses playground to build an ext2 file-system file containing the public key and the verification script
 docker run \
