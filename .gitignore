@@ -1,5 +1,8 @@
 node_modules/
-build/
-test/*/
+artifacts/
+cache/
+deployments/
 .vscode/
+.viminfo
+.bash_history
 descartes-env*.tar.gz
