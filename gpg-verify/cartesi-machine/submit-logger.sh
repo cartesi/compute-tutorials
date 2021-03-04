@@ -15,7 +15,6 @@ docker run --rm \
   -e GID=$(id -g) \
   -v `pwd`/../..:/home/$(id -u -n) \
   -w /home/$(id -u -n) \
-  --env MNEMONIC="test test test test test test test test test test test junk" \
   --network host \
   --entrypoint "/opt/cartesi/bin/simple-logger" \
   $CARTESI_LOGGER_DOCKER \
