@@ -32,7 +32,7 @@ contract GpgVerify {
 
     DescartesInterface descartes;
 
-    bytes32 templateHash = 0xa05eceed5425fc12a340db4417a551655aac06ef42ae2301a7570ec888ccdca8;
+    bytes32 templateHash = 0x225739224ddd0c3dc29b6dfb80b5faf692657df7024b67b3e01d10821a82d248;
 
     // this DApp has an ext2 file-system (at 0x9000..) and two input drives (at 0xa000.. and 0xb000..), so the output will be at 0xc000..
     uint64 outputPosition = 0xc000000000000000;
@@ -40,7 +40,7 @@ contract GpgVerify {
     uint8 outputLog2Size = 5;
 
     uint256 finalTime = 1e11;
-    uint256 roundDuration = 51;
+    uint256 roundDuration = 100;
 
     // document that was signed
     bytes document = "My public statement\n";

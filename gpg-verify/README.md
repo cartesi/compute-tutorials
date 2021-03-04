@@ -18,6 +18,37 @@ In its turn, the DApp's Cartesi Machine contains the corresponding [public key](
 
 Please refer to the [GnuPG manual](https://www.gnupg.org/gph/en/manual.html) for details on how to create other keypairs and produce detached signatures. If desired, the provided private key can be used to sign other documents (its passphrase is "Descartes rocks!").
 
+## Usage with Logger
+
+The [GpgVerify.sol](./contracts/GpgVerify.sol) contract includes a method for instantiating the computation using the Logger root hashes of a document and its corresponding signature.
+
+In order to use it, before calling the instantiation method you should prepare the desired data and submit it to the Logger contract. "Preparing the data" basically involves prepending it with two bytes that encode the content length, which is the format expected by the implemented Cartesi Machine. The [prepend-length.sh](./cartesi-machine/prepend-length.sh) and [submit-logger.sh](./cartesi-machine/submit-logger.sh) scripts can be used to help in those tasks.
+
+For instance, for the existing [document](./cartesi-machine/document) and [signature](./cartesi-machine/signature) files, you should execute the following commands:
+
+```bash
+$ cd cartesi-machine
+$ ./prepend-length.sh document document.prepended
+$ ./prepend-length.sh signature signature.prepended
+```
+
+And then:
+```bash
+$ ./submit-logger.sh document.prepended 10 10
+$ ./submit-logger.sh signature.prepended 10 10
+```
+
+Where the numeral parameters respectively correspond to the blob/chunk log2 size (1K) and tree/total log2 size (also 1K). The logger root hash will be printed on the screen and also written to corresponding `*.submit` files. This script will attempt to deploy to the local Ethereum node that should running in the [descartes-env](../descartes-env) directory.
+
+The signature verification can then be instantiated using the configured Hardhat task `instantiate-logger`, providing the desired logger root hashes and total tree sizes:
+
+```bash
+$ npx hardhat --network localhost instantiate-logger \
+    --docroothash 0x$(cat document.prepended.submit) \
+    --doclog2size 10 \
+    --sigroothash 0x$(cat signature.prepended.submit) \
+    --siglog2size 10
+```
 
 ## Building the Cartesi Machine
 

@@ -60,6 +60,80 @@ task("instantiate", "Instantiate a GpgVerify computation").setAction(
   }
 );
 
+// instantiate task using logger drives
+task(
+  "instantiate-logger",
+  "Instantiate a GpgVerify computation using logger drives"
+)
+  .addOptionalParam(
+    "docroothash",
+    "The Logger root hash for the document",
+    "0x2df9c8f9a61f6a6a04aa925c42035fd6d9918c8b75be667915c0200bae07dff5",
+    types.string
+  )
+  .addOptionalParam(
+    "doclog2size",
+    "Log2 size of the document data stored in the Logger",
+    10,
+    types.int
+  )
+  .addOptionalParam(
+    "sigroothash",
+    "The Logger root hash for the signature",
+    "0x20ef9edefbec24e4c419c1bbe7c259cf4eb3b758994e8c785d2c1fce8c2dfd35",
+    types.string
+  )
+  .addOptionalParam(
+    "siglog2size",
+    "Log2 size of the signature data stored in the Logger",
+    10,
+    types.int
+  )
+  .setAction(
+    async ({ docroothash, doclog2size, sigroothash, siglog2size }, hre) => {
+      const { ethers } = hre;
+      const descartes = await ethers.getContract("Descartes");
+      const contract = await ethers.getContract("GpgVerify");
+      const logger = await ethers.getContract("Logger");
+
+      const isDocAvail = await logger.isLogAvailable(docroothash, doclog2size);
+      const isSigAvail = await logger.isLogAvailable(sigroothash, siglog2size);
+      if (!isDocAvail) {
+        console.error(
+          `Document is not available in the logger with root hash '${docroothash}' and log2size ${doclog2size} `
+        );
+      }
+      if (!isSigAvail) {
+        console.error(
+          `Signature is not available in the logger with root hash '${sigroothash}' and log2size ${siglog2size} `
+        );
+      }
+      if (!isDocAvail || !isSigAvail) {
+        console.error("Aborting.");
+        return;
+      }
+
+      const { alice, bob } = await hre.getNamedAccounts();
+
+      const tx = await contract.instantiateWithLogger(
+        [alice, bob],
+        docroothash,
+        doclog2size,
+        sigroothash,
+        siglog2size
+      );
+
+      // retrieves created computation's index
+      const index = await new Promise((resolve) => {
+        descartes.on("DescartesCreated", (index) => resolve(index));
+      });
+
+      console.log(
+        `Instantiation successful with index '${index}' (tx: ${tx.hash} ; blocknumber: ${tx.blockNumber})\n`
+      );
+    }
+  );
+
 // get-result task
 task("get-result", "Retrieves a GpgVerify computation result given its index")
   .addOptionalParam("index", "The GpgVerify computation index", 0, types.int)
