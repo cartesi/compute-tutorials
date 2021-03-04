@@ -115,10 +115,92 @@ task(
 
       const { alice, bob } = await hre.getNamedAccounts();
 
-      const tx = await contract.instantiateWithLogger(
+      const tx = await contract.instantiateWithLoggerIpfs(
         [alice, bob],
+        "0x00",
         docroothash,
         doclog2size,
+        "0x00",
+        sigroothash,
+        siglog2size
+      );
+
+      // retrieves created computation's index
+      const index = await new Promise((resolve) => {
+        descartes.on("DescartesCreated", (index) => resolve(index));
+      });
+
+      console.log(
+        `Instantiation successful with index '${index}' (tx: ${tx.hash} ; blocknumber: ${tx.blockNumber})\n`
+      );
+    }
+  );
+
+// instantiate task using ipfs drives
+task(
+  "instantiate-ipfs",
+  "Instantiate a GpgVerify computation using ipfs drives"
+)
+  .addOptionalParam(
+    "docipfspath",
+    "The IPFS path for the document",
+    "QmYX8wU5UfFSSXcB3tP9qvEv1xTsVtTefSESz2oJNBkh4Q",
+    types.string
+  )
+  .addOptionalParam(
+    "docroothash",
+    "The Logger root hash for the document",
+    "0x2df9c8f9a61f6a6a04aa925c42035fd6d9918c8b75be667915c0200bae07dff5",
+    types.string
+  )
+  .addOptionalParam(
+    "doclog2size",
+    "Log2 size of the document data stored in the Logger",
+    10,
+    types.int
+  )
+  .addOptionalParam(
+    "sigipfspath",
+    "The IPFS path for the document",
+    "QmaSJoHpk6ZVHyZncDX8vxqseRE1tq4HUyM52WjgjhVNxB",
+    types.string
+  )
+  .addOptionalParam(
+    "sigroothash",
+    "The Logger root hash for the signature",
+    "0x20ef9edefbec24e4c419c1bbe7c259cf4eb3b758994e8c785d2c1fce8c2dfd35",
+    types.string
+  )
+  .addOptionalParam(
+    "siglog2size",
+    "Log2 size of the signature data stored in the Logger",
+    10,
+    types.int
+  )
+  .setAction(
+    async (
+      {
+        docipfspath,
+        docroothash,
+        doclog2size,
+        sigipfspath,
+        sigroothash,
+        siglog2size,
+      },
+      hre
+    ) => {
+      const { ethers } = hre;
+      const descartes = await ethers.getContract("Descartes");
+      const contract = await ethers.getContract("GpgVerify");
+
+      const { alice, bob } = await hre.getNamedAccounts();
+
+      const tx = await contract.instantiateWithLoggerIpfs(
+        [alice, bob],
+        ethers.utils.hexlify(ethers.utils.toUtf8Bytes(`/ipfs/${docipfspath}`)),
+        docroothash,
+        doclog2size,
+        ethers.utils.hexlify(ethers.utils.toUtf8Bytes(`/ipfs/${sigipfspath}`)),
         sigroothash,
         siglog2size
       );

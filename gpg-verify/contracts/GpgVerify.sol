@@ -40,7 +40,7 @@ contract GpgVerify {
     uint8 outputLog2Size = 5;
 
     uint256 finalTime = 1e11;
-    uint256 roundDuration = 100;
+    uint256 roundDuration = 51;
 
     // document that was signed
     bytes document = "My public statement\n";
@@ -120,7 +120,17 @@ contract GpgVerify {
         );
     }
 
-    function instantiateWithLogger(address[] memory parties, bytes32 documentRootHash, uint8 documentLog2Size, bytes32 signatureRootHash, uint8 signatureLog2Size) public returns (uint256) {
+    function instantiateWithLoggerIpfs(
+        address[] memory parties,
+        bytes memory documentIpfsPath,
+        bytes32 documentRootHash,
+        uint8 documentLog2Size,
+        bytes memory signatureIpfsPath,
+        bytes32 signatureRootHash,
+        uint8 signatureLog2Size)
+    public
+        returns (uint256)
+    {
 
         // specifies two input drives containing the document and the signature
         DescartesInterface.Drive[] memory drives = new DescartesInterface.Drive[](2);
@@ -128,7 +138,7 @@ contract GpgVerify {
             0xa000000000000000,    // 3rd drive position: 1st is the root file-system (0x8000..), 2nd is the dapp-data file-system (0x9000..)
             documentLog2Size,      // driveLog2Size
             "",                    // directValue
-            "",                    // loggerIpfsPath
+            documentIpfsPath,      // loggerIpfsPath
             documentRootHash,      // loggerRootHash
             parties[0],            // provider
             false,                 // waitsProvider
@@ -138,7 +148,7 @@ contract GpgVerify {
             0xb000000000000000,    // 4th drive position
             signatureLog2Size,     // driveLog2Size
             "",                    // directValue
-            "",                    // loggerIpfsPath
+            signatureIpfsPath,     // loggerIpfsPath
             signatureRootHash,     // loggerRootHash
             parties[0],            // provider
             false,                 // waitsProvider
