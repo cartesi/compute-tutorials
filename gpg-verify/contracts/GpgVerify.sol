@@ -32,7 +32,7 @@ contract GpgVerify {
 
     DescartesInterface descartes;
 
-    bytes32 templateHash = 0x225739224ddd0c3dc29b6dfb80b5faf692657df7024b67b3e01d10821a82d248;
+    bytes32 templateHash = 0x6112b734b656b17ab04166d56c767f5b5268a0d8761a6379df35daa63c0abc6d;
 
     // this DApp has an ext2 file-system (at 0x9000..) and two input drives (at 0xa000.. and 0xb000..), so the output will be at 0xc000..
     uint64 outputPosition = 0xc000000000000000;
@@ -69,17 +69,19 @@ contract GpgVerify {
     }
 
     function prependDataWithContentLength(bytes storage input, bytes storage output) internal {
-        // length is assumed to fit in two bytes
-        assert(input.length <= 0xffff);
+        // length is assumed to fit in four bytes
+        assert(input.length <= 0xffffffff);
 
-        // sets first two bytes in output as the input length
+        // sets first four bytes in output as the input length
         bytes memory inputLength = abi.encodePacked(input.length);
-        output[0] = inputLength[inputLength.length-2];
-        output[1] = inputLength[inputLength.length-1];
+        output[0] = inputLength[inputLength.length-4];
+        output[1] = inputLength[inputLength.length-3];
+        output[2] = inputLength[inputLength.length-2];
+        output[3] = inputLength[inputLength.length-1];
 
         // subsequent bytes in output are the input bytes themselves
-        for (uint i = 0; i < input.length && i+2 < output.length; i++) {
-          output[i+2] = input[i];
+        for (uint i = 0; i < input.length && i+4 < output.length; i++) {
+          output[i+4] = input[i];
         }
     }
 

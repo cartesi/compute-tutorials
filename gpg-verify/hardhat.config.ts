@@ -68,7 +68,7 @@ task(
   .addOptionalParam(
     "docroothash",
     "The Logger root hash for the document",
-    "0x2df9c8f9a61f6a6a04aa925c42035fd6d9918c8b75be667915c0200bae07dff5",
+    "0x1b0fba479b956097d0ec40f1f7701fe2d87db95533a169e5c9ef0f0f4bcfbfc3",
     types.string
   )
   .addOptionalParam(
@@ -80,7 +80,7 @@ task(
   .addOptionalParam(
     "sigroothash",
     "The Logger root hash for the signature",
-    "0x20ef9edefbec24e4c419c1bbe7c259cf4eb3b758994e8c785d2c1fce8c2dfd35",
+    "0xde4bf0395d168034e505163232c458e043ce9aaca9e84b1f59c351b2a05a9192",
     types.string
   )
   .addOptionalParam(
@@ -144,13 +144,13 @@ task(
   .addOptionalParam(
     "docipfspath",
     "The IPFS path for the document",
-    "QmYX8wU5UfFSSXcB3tP9qvEv1xTsVtTefSESz2oJNBkh4Q",
+    "QmZM34TdjqE7hWqURJLWhZuKxB38fqBNZnk9JuF9CmwHGA",
     types.string
   )
   .addOptionalParam(
     "docroothash",
     "The Logger root hash for the document",
-    "0x2df9c8f9a61f6a6a04aa925c42035fd6d9918c8b75be667915c0200bae07dff5",
+    "0x1b0fba479b956097d0ec40f1f7701fe2d87db95533a169e5c9ef0f0f4bcfbfc3",
     types.string
   )
   .addOptionalParam(
@@ -162,13 +162,13 @@ task(
   .addOptionalParam(
     "sigipfspath",
     "The IPFS path for the document",
-    "QmaSJoHpk6ZVHyZncDX8vxqseRE1tq4HUyM52WjgjhVNxB",
+    "QmdJoRUwomKnYX1zqfGxRTgPBBkZwTPvCU7F1QEv3Qt972",
     types.string
   )
   .addOptionalParam(
     "sigroothash",
     "The Logger root hash for the signature",
-    "0x20ef9edefbec24e4c419c1bbe7c259cf4eb3b758994e8c785d2c1fce8c2dfd35",
+    "0xde4bf0395d168034e505163232c458e043ce9aaca9e84b1f59c351b2a05a9192",
     types.string
   )
   .addOptionalParam(
