@@ -22,7 +22,7 @@ Please refer to the [GnuPG manual](https://www.gnupg.org/gph/en/manual.html) for
 
 The [GpgVerify.sol](./contracts/GpgVerify.sol) contract includes a method for instantiating the computation using the Logger root hashes of a document and its corresponding signature.
 
-In order to use it, before calling the instantiation method you should prepare the desired data and submit it to the Logger contract. "Preparing the data" basically involves prepending it with two bytes that encode the content length, which is the format expected by the implemented Cartesi Machine. The [prepend-length.sh](./cartesi-machine/prepend-length.sh) and [submit-logger.sh](./cartesi-machine/submit-logger.sh) scripts can be used to help in those tasks.
+In order to use it, before calling the instantiation method you should prepare the desired data and submit it to the Logger contract. "Preparing the data" basically involves prepending it with four bytes that encode the content length, which is the format expected by the implemented Cartesi Machine. The [prepend-length.sh](./cartesi-machine/prepend-length.sh) and [submit-logger.sh](./cartesi-machine/submit-logger.sh) scripts can be used to help in those tasks.
 
 For instance, for the existing [document](./cartesi-machine/document) and [signature](./cartesi-machine/signature) files, you should execute the following commands:
 
@@ -46,6 +46,46 @@ The signature verification can then be instantiated using the configured Hardhat
 $ npx hardhat --network localhost instantiate-logger \
     --docroothash 0x$(cat document.prepended.submit) \
     --doclog2size 10 \
+    --sigroothash 0x$(cat signature.prepended.submit) \
+    --siglog2size 10
+```
+
+## Usage with IPFS
+
+The same method used above for the Logger can be used for instantiating the computation using the IPFS paths of a document and its corresponding signature. The Logger root hashes of both files are also needed, but the data does not need to be actually submitted to the blockchain.
+
+As before, you should prepare the data and submit it beforehand, in this case to IPFS. Once again we must ensure that the data has been properly prepended with four bytes that encode the content length, as expected by the implemented Cartesi Machine. Then, the [compute-merkle.sh](./cartesi-machine/compute-merkle.sh) script can be used to compute the Logger root hash without submitting the data to the blockchain. Finally, the [submit-ipfs.sh](./cartesi-machine/submit-ipfs.sh) script can be executed in order to publish the data to IPFS. This script is currently uploading the data to Infura, making it available to be downloaded later on by the Descartes IPFS service running in each node.
+
+For the existing [document](./cartesi-machine/document) and [signature](./cartesi-machine/signature) files, you should execute the following commands:
+
+```bash
+$ cd cartesi-machine
+$ ./prepend-length.sh document document.prepended
+$ ./prepend-length.sh signature signature.prepended
+```
+
+And then:
+```bash
+$ ./compute-merkle.sh document.prepended 10
+$ ./compute-merkle.sh signature.prepended 10
+```
+Where the numeral parameter corresponds to the tree/total log2 size of the file (1K in this case). As with the [submit-logger.sh](./cartesi-machine/submit-logger.sh) script, the logger root hash will be printed on the screen and also written to corresponding `*.submit` files.
+
+And finally:
+```bash
+$ ./submit-ipfs.sh document.prepended
+$ ./submit-ipfs.sh signature.prepended
+```
+Which will upload the files to IPFS and print on the screen the resulting IPFS path. The script also writes the path to corresponding `*.ipfs` files.
+
+The computation can then be instantiated using the configured Hardhat task `instantiate-ipfs`, providing the desired ipfs paths, logger root hashes and total tree sizes for each drive:
+
+```bash
+$ npx hardhat --network localhost instantiate-ipfs \
+    --docipfspath $(cat document.prepended.ipfs) \
+    --docroothash 0x$(cat document.prepended.submit) \
+    --doclog2size 10 \
+    --sigipfspath $(cat signature.prepended.ipfs) \
     --sigroothash 0x$(cat signature.prepended.submit) \
     --siglog2size 10
 ```
