@@ -144,7 +144,7 @@ task(
   .addOptionalParam(
     "docipfspath",
     "The IPFS path for the document",
-    "QmZM34TdjqE7hWqURJLWhZuKxB38fqBNZnk9JuF9CmwHGA",
+    "/ipfs/QmZM34TdjqE7hWqURJLWhZuKxB38fqBNZnk9JuF9CmwHGA",
     types.string
   )
   .addOptionalParam(
@@ -162,7 +162,7 @@ task(
   .addOptionalParam(
     "sigipfspath",
     "The IPFS path for the document",
-    "QmdJoRUwomKnYX1zqfGxRTgPBBkZwTPvCU7F1QEv3Qt972",
+    "/ipfs/QmdJoRUwomKnYX1zqfGxRTgPBBkZwTPvCU7F1QEv3Qt972",
     types.string
   )
   .addOptionalParam(
@@ -197,10 +197,10 @@ task(
 
       const tx = await contract.instantiateWithLoggerIpfs(
         [alice, bob],
-        ethers.utils.hexlify(ethers.utils.toUtf8Bytes(`/ipfs/${docipfspath}`)),
+        ethers.utils.hexlify(ethers.utils.toUtf8Bytes(docipfspath)),
         docroothash,
         doclog2size,
-        ethers.utils.hexlify(ethers.utils.toUtf8Bytes(`/ipfs/${sigipfspath}`)),
+        ethers.utils.hexlify(ethers.utils.toUtf8Bytes(sigipfspath)),
         sigroothash,
         siglog2size
       );
