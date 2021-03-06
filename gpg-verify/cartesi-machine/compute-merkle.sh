@@ -2,12 +2,12 @@
 
 CARTESI_IPFS_DOCKER=cartesi/ipfs-server:0.2.0
 
-if [ ! $3 ]; then
-  echo "3 parameters required: file, blob size and tree size"
+if [ ! $2 ]; then
+  echo "2 parameters required: file and tree size"
   exit 1
 fi
 
-docker run --rm \
+merkle=$(docker run --rm \
   -e USER=$(id -u -n) \
   -e GROUP=$(id -g -n) \
   -e UID=$(id -u) \
@@ -16,4 +16,7 @@ docker run --rm \
   -w /home/$(id -u -n) \
   --entrypoint "/opt/cartesi/bin/merkle-tree-hash" \
   $CARTESI_IPFS_DOCKER \
-  --input=$1 --page-log2-size=$2 --tree-log2-size=$3
+  --input=$1 --page-log2-size=$2 --tree-log2-size=$2)
+
+echo $merkle
+printf $merkle > $1.submit
