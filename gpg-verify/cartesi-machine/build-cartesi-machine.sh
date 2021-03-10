@@ -30,7 +30,7 @@ docker run \
     --initial-hash \
     --store="$MACHINE_TEMP_DIR" \
     --flash-drive="label:dapp-data,filename:dapp-data.ext2" \
-    --flash-drive="label:document,length:1<<26" \
+    --flash-drive="label:document,length:1<<22" \
     --flash-drive="label:signature,length:1<<12" \
     --flash-drive="label:output,length:1<<12" \
     -- $'date -s \'2100-01-01\' && /mnt/dapp-data/gpg-verify.sh'

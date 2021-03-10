@@ -32,7 +32,7 @@ contract GpgVerify {
 
     DescartesInterface descartes;
 
-    bytes32 templateHash = 0xd7b4430ba1270c233c874959a5301a3202e69b1ca8f9f21a624871b31b5ee6b9;
+    bytes32 templateHash = 0xb119156738bc5563f01a81d642e1a8331d6a93f16ff9187123718126a333a261;
 
     // this DApp has an ext2 file-system (at 0x9000..) and two input drives (at 0xa000.. and 0xb000..), so the output will be at 0xc000..
     uint64 outputPosition = 0xc000000000000000;
@@ -40,7 +40,7 @@ contract GpgVerify {
     uint8 outputLog2Size = 5;
 
     uint256 finalTime = 1e11;
-    uint256 roundDuration = 51;
+    uint256 roundDuration = 75;
 
     // document that was signed
     bytes document = "My public statement\n";
@@ -56,14 +56,14 @@ contract GpgVerify {
                       hex'e8a28b36ac20116586f89ebe193af5898aa947ada15bbbb8d09e3894c33d7bdb20a8b1bc6be60ac03fdbc0be0ffdfa326c';
 
     // corresponding document and signature data to be sent as input drives to the off-chain Cartesi Machine
-    // - this machine expects the first two bytes of the input data to encode the length of the content of interest
+    // - this machine expects the first four bytes of the input data to encode the length of the content of interest
     bytes documentData = new bytes(1024);
     bytes signatureData = new bytes(1024);
 
     constructor(address descartesAddress) {
         descartes = DescartesInterface(descartesAddress);
 
-        // prepares data: computation expects input data to be prepended by two bytes that encode the length of the content
+        // prepares data: computation expects input data to be prepended by four bytes that encode the length of the content
         prependDataWithContentLength(document, documentData);
         prependDataWithContentLength(signature, signatureData);
     }
@@ -133,7 +133,6 @@ contract GpgVerify {
     public
         returns (uint256)
     {
-
         // specifies two input drives containing the document and the signature
         DescartesInterface.Drive[] memory drives = new DescartesInterface.Drive[](2);
         drives[0] = DescartesInterface.Drive(
