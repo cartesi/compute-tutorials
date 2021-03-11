@@ -35,7 +35,7 @@ services:
       RUST_BACKTRACE: 1
     volumes:
       - ./:/opt/cartesi/share/blockchain:ro
-      - alice_data:/opt/cartesi/srv/descartes
+      - ./alice_data:/opt/cartesi/srv/descartes/flashdrive
     networks:
       ethereum: {}
       alice:
@@ -49,7 +49,7 @@ services:
     command: [ "-c", "/opt/cartesi/share/blockchain/deployments/localhost/Logger.json", "-d", "/opt/cartesi/srv/descartes/flashdrive"]
     volumes:
       - ./:/opt/cartesi/share/blockchain:ro
-      - alice_data:/opt/cartesi/srv/descartes
+      - ./alice_data:/opt/cartesi/srv/descartes/flashdrive
     environment:
       MNEMONIC: "test test test test test test test test test test test junk"
       ACCOUNT_INDEX: 0
@@ -64,7 +64,7 @@ services:
   alice_ipfs:
     image: cartesi/ipfs-server:0.2.0
     volumes:
-      - alice_data:/opt/cartesi/srv/descartes
+      - ./alice_data:/opt/cartesi/srv/descartes/flashdrive
     networks:
       ipfs: {}
       alice:
@@ -77,7 +77,7 @@ services:
     image: cartesi/machine-manager:0.5.0
     volumes:
       - ./machines:/opt/cartesi/srv/descartes/cartesi-machine
-      - alice_data:/opt/cartesi/srv/descartes
+      - ./alice_data:/opt/cartesi/srv/descartes/flashdrive
     networks:
       ethereum: {}
       alice:
@@ -104,7 +104,7 @@ services:
       RUST_BACKTRACE: 1
     volumes:
       - ./:/opt/cartesi/share/blockchain:ro
-      - bob_data:/opt/cartesi/srv/descartes
+      - ./bob_data:/opt/cartesi/srv/descartes/flashdrive
     networks:
       ethereum: {}
       bob:
@@ -118,7 +118,7 @@ services:
     command: [ "-c", "/opt/cartesi/share/blockchain/deployments/localhost/Logger.json", "-d", "/opt/cartesi/srv/descartes/flashdrive"]
     volumes:
       - ./:/opt/cartesi/share/blockchain:ro
-      - bob_data:/opt/cartesi/srv/descartes
+      - ./bob_data:/opt/cartesi/srv/descartes/flashdrive
     environment:
       MNEMONIC: "test test test test test test test test test test test junk"
       ACCOUNT_INDEX: 1
@@ -133,7 +133,7 @@ services:
   bob_ipfs:
     image: cartesi/ipfs-server:0.2.0
     volumes:
-      - bob_data:/opt/cartesi/srv/descartes
+      - ./bob_data:/opt/cartesi/srv/descartes/flashdrive
     networks:
       ipfs: {}
       bob:
@@ -146,16 +146,12 @@ services:
     image: cartesi/machine-manager:0.5.0
     volumes:
       - ./machines:/opt/cartesi/srv/descartes/cartesi-machine
-      - bob_data:/opt/cartesi/srv/descartes
+      - ./bob_data:/opt/cartesi/srv/descartes/flashdrive
     networks:
       ethereum: {}
       bob:
         aliases:
           - machine-manager
-
-volumes:
-  alice_data:
-  bob_data:
 
 networks:
   ipfs:

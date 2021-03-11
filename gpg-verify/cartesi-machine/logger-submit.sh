@@ -8,16 +8,21 @@ if [ ! $3 ]; then
   exit 1
 fi
 
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+BASEPATH=$SCRIPTPATH/../..
+DOCPATH=$(realpath --relative-to=$BASEPATH $1)
+
 docker run --rm \
   -e USER=$(id -u -n) \
   -e GROUP=$(id -g -n) \
   -e UID=$(id -u) \
   -e GID=$(id -g) \
-  -v `pwd`/../..:/home/$(id -u -n) \
+  -v $BASEPATH:/home/$(id -u -n) \
   -w /home/$(id -u -n) \
   --network host \
   --entrypoint "/opt/cartesi/bin/simple-logger" \
   $CARTESI_LOGGER_DOCKER \
-  -c descartes-env/deployments/localhost/Logger.json -d . --action submit -p "gpg-verify/cartesi-machine/$1" -b $2 -t $3
+  -c descartes-env/deployments/localhost/Logger.json -d . --action submit -p $DOCPATH -b $2 -t $3
 
-cat "$1.submit" && echo
+cp $1.submit $1.merkle
+cat $1.merkle && echo

@@ -94,24 +94,6 @@ task(
       const { ethers } = hre;
       const descartes = await ethers.getContract("Descartes");
       const contract = await ethers.getContract("GpgVerify");
-      const logger = await ethers.getContract("Logger");
-
-      const isDocAvail = await logger.isLogAvailable(docroothash, doclog2size);
-      const isSigAvail = await logger.isLogAvailable(sigroothash, siglog2size);
-      if (!isDocAvail) {
-        console.error(
-          `Document is not available in the logger with root hash '${docroothash}' and log2size ${doclog2size} `
-        );
-      }
-      if (!isSigAvail) {
-        console.error(
-          `Signature is not available in the logger with root hash '${sigroothash}' and log2size ${siglog2size} `
-        );
-      }
-      if (!isDocAvail || !isSigAvail) {
-        console.error("Aborting.");
-        return;
-      }
 
       const { alice, bob } = await hre.getNamedAccounts();
 

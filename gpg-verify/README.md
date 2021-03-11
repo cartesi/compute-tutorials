@@ -20,9 +20,9 @@ Please refer to the [GnuPG manual](https://www.gnupg.org/gph/en/manual.html) for
 
 ## Usage with Logger
 
-The [GpgVerify.sol](./contracts/GpgVerify.sol) contract includes a method for instantiating the computation using the Logger root hashes of a document and its corresponding signature.
+The [GpgVerify.sol](./contracts/GpgVerify.sol) contract includes a method for instantiating the computation using the Merkle root hashes of a document and its corresponding signature.
 
-In order to use it, before calling the instantiation method you should prepare the desired data and submit it to the Logger contract. "Preparing the data" basically involves prepending it with four bytes that encode the content length, which is the format expected by the implemented Cartesi Machine. The [prepend-length.sh](./cartesi-machine/prepend-length.sh) and [submit-logger.sh](./cartesi-machine/submit-logger.sh) scripts can be used to help in those tasks.
+In order to use it, before calling the instantiation method you should prepare the desired data and make it available to the Logger service. "Preparing the data" basically involves prepending each file with four bytes that encode the content length, which is the format expected by the implemented Cartesi Machine. The Merkle root hashes of the resulting files should then be computed before making the contents available to the Logger service by adding them to a Descartes node's data directory. The [prepend-length.sh](./cartesi-machine/prepend-length.sh) and [logger-add.sh](./cartesi-machine/logger-add.sh) scripts can be used to help in those tasks.
 
 For instance, for the existing [document](./cartesi-machine/document) and [signature](./cartesi-machine/signature) files, you should execute the following commands:
 
@@ -34,59 +34,47 @@ $ ./prepend-length.sh signature signature.prepended
 
 And then:
 ```bash
-$ ./submit-logger.sh document.prepended 10 10
-$ ./submit-logger.sh signature.prepended 10 10
+$ ./logger-add.sh document.prepended 10 ../../descartes-env/alice_data
+$ ./logger-add.sh signature.prepended 10 ../../descartes-env/alice_data
 ```
 
-Where the numeral parameters respectively correspond to the blob/chunk log2 size (1K) and tree/total log2 size (also 1K). The logger root hash will be printed on the screen and also written to corresponding `*.submit` files. This script will attempt to deploy to the local Ethereum node that should running in the [descartes-env](../descartes-env) directory.
+Where the numeral parameter corresponds to the log2 size to be used when computing the Merkle tree of the data (1K in this case, must be at least as large as the data contents). The Merkle root hash will be printed on the screen and also written to corresponding `*.merkle` files. The script will then place the files in the indicated destination data directory, which in this case corresponds to the one for `alice`'s node.
 
-The signature verification can then be instantiated using the configured Hardhat task `instantiate-logger`, providing the desired logger root hashes and total tree sizes:
+The signature verification can then be instantiated using the configured Hardhat task `instantiate-logger`, providing the appropriate Merkle root hashes and total tree sizes. This will effectively make `alice`'s node publish the data on-chain. To avoid submitting the data to the blockchain, jump to the next section to call another instantiation method which uses IPFS as well.
 
 ```bash
 $ npx hardhat --network localhost instantiate-logger \
-    --docroothash 0x$(cat document.prepended.submit) \
+    --docroothash 0x$(cat document.prepended.merkle) \
     --doclog2size 10 \
-    --sigroothash 0x$(cat signature.prepended.submit) \
+    --sigroothash 0x$(cat signature.prepended.merkle) \
     --siglog2size 10
 ```
 
+Alternatively, the [logger-submit.sh](./cartesi-machine/logger-add.sh) script can be used instead of [logger-add.sh](./cartesi-machine/logger-add.sh). This will immediately submit the data directly to the blockchain.
+
 ## Usage with IPFS
 
-The same method used above for the Logger can be used for instantiating the computation using the IPFS paths of a document and its corresponding signature. The Logger root hashes of both files are also needed, but the data does not need to be actually submitted to the blockchain.
+Instead of performing the above instantiation, an alternative would be to first submit the data to IPFS and then inform the IPFS paths for the document and its corresponding signature. The Merkle root hashes of both files will also be needed and the data should still be available in the Logger service's data directory as before, but if the data is found on IPFS it will not need to be actually submitted to the blockchain.
 
-As before, you should prepare the data and submit it beforehand, in this case to IPFS. Once again we must ensure that the data has been properly prepended with four bytes that encode the content length, as expected by the implemented Cartesi Machine. Then, the [compute-merkle.sh](./cartesi-machine/compute-merkle.sh) script can be used to compute the Logger root hash without submitting the data to the blockchain. Finally, the [submit-ipfs.sh](./cartesi-machine/submit-ipfs.sh) script can be executed in order to publish the data to IPFS. This script is currently uploading the data to Infura, making it available to be downloaded later on by the Descartes IPFS service running in each node.
+The [ipfs-submit.sh](./cartesi-machine/ipfs-submit.sh) script can be executed in order to publish the data to IPFS. This script is currently uploading the data to Infura, making it available to be downloaded later on by the Descartes IPFS service running in each node.
 
 For the existing [document](./cartesi-machine/document) and [signature](./cartesi-machine/signature) files, you should execute the following commands:
 
 ```bash
-$ cd cartesi-machine
-$ ./prepend-length.sh document document.prepended
-$ ./prepend-length.sh signature signature.prepended
+$ ./ipfs-submit.sh document.prepended
+$ ./ipfs-submit.sh signature.prepended
 ```
-
-And then:
-```bash
-$ ./compute-merkle.sh document.prepended 10
-$ ./compute-merkle.sh signature.prepended 10
-```
-Where the numeral parameter corresponds to the tree/total log2 size of the file (1K in this case). As with the [submit-logger.sh](./cartesi-machine/submit-logger.sh) script, the logger root hash will be printed on the screen and also written to corresponding `*.submit` files.
-
-And finally:
-```bash
-$ ./submit-ipfs.sh document.prepended
-$ ./submit-ipfs.sh signature.prepended
-```
-Which will upload the files to IPFS and print on the screen the resulting IPFS path. The script also writes the path to corresponding `*.ipfs` files.
+Which will upload the files to IPFS and print on the screen the resulting IPFS hash. The script also writes the resulting hash to a corresponding `*.ipfs` file.
 
 The computation can then be instantiated using the configured Hardhat task `instantiate-ipfs`, providing the desired ipfs paths, logger root hashes and total tree sizes for each drive:
 
 ```bash
 $ npx hardhat --network localhost instantiate-ipfs \
-    --docipfspath $(cat document.prepended.ipfs) \
-    --docroothash 0x$(cat document.prepended.submit) \
+    --docipfspath /ipfs/$(cat document.prepended.ipfs) \
+    --docroothash 0x$(cat document.prepended.merkle) \
     --doclog2size 10 \
-    --sigipfspath $(cat signature.prepended.ipfs) \
-    --sigroothash 0x$(cat signature.prepended.submit) \
+    --sigipfspath /ipfs/$(cat signature.prepended.ipfs) \
+    --sigroothash 0x$(cat signature.prepended.merkle) \
     --siglog2size 10
 ```
 

@@ -19,4 +19,4 @@ merkle=$(docker run --rm \
   --input=$1 --page-log2-size=$2 --tree-log2-size=$2)
 
 echo $merkle
-printf $merkle > $1.submit
+printf $merkle > $1.merkle
