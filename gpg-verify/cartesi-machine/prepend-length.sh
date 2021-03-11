@@ -2,6 +2,11 @@
 
 CARTESI_PLAYGROUND_DOCKER=cartesi/playground:0.3.0
 
+if [ ! $1 ]; then
+  echo "1 parameter required: file"
+  exit 1
+fi
+
 docker run --rm \
   -e USER=$(id -u -n) \
   -e GROUP=$(id -g -n) \

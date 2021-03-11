@@ -28,11 +28,14 @@ For instance, for the existing [document](./cartesi-machine/document) and [signa
 
 ```bash
 $ cd cartesi-machine
-$ ./prepend-length.sh document document.prepended
-$ ./prepend-length.sh signature signature.prepended
+$ ./prepend-length.sh document
+$ ./prepend-length.sh signature
 ```
 
+Which will generate corresponding `*.prepended` files.
+
 And then:
+
 ```bash
 $ ./logger-add.sh document.prepended 10 ../../descartes-env/alice_data
 $ ./logger-add.sh signature.prepended 10 ../../descartes-env/alice_data
