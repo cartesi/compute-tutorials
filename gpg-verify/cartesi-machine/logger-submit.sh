@@ -1,7 +1,6 @@
 #!/bin/bash
 
-CARTESI_LOGGER_DOCKER=cartesicorp/logger-server:latest
-# CARTESI_LOGGER_DOCKER=cartesi/logger-server:0.6.2
+CARTESI_LOGGER_DOCKER=cartesi/logger-server:0.7.0
 
 if [ ! $3 ]; then
   echo "3 parameters required: file to submit, blob log2 size and tree log2 size"

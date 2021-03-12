@@ -45,7 +45,7 @@ services:
       - "3001:3001"
 
   alice_logger:
-    image: cartesicorp/logger-server:latest
+    image: cartesi/logger-server:0.7.0
     command: [ "-c", "/opt/cartesi/share/blockchain/deployments/localhost/Logger.json", "-d", "/opt/cartesi/srv/descartes/flashdrive"]
     volumes:
       - ./:/opt/cartesi/share/blockchain:ro
@@ -114,7 +114,7 @@ services:
       - "3002:3001"
 
   bob_logger:
-    image: cartesicorp/logger-server:latest
+    image: cartesi/logger-server:0.7.0
     command: [ "-c", "/opt/cartesi/share/blockchain/deployments/localhost/Logger.json", "-d", "/opt/cartesi/srv/descartes/flashdrive"]
     volumes:
       - ./:/opt/cartesi/share/blockchain:ro
