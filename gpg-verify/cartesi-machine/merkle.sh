@@ -16,7 +16,7 @@ merkle=$(docker run --rm \
   -w /home/$(id -u -n) \
   --entrypoint "/opt/cartesi/bin/merkle-tree-hash" \
   $CARTESI_IPFS_DOCKER \
-  --input=$1 --tree-log2-size=$2)
+  --input=$1 --page-log2-size=$2 --tree-log2-size=$2)
 
 echo $merkle
 printf $merkle > $1.merkle
