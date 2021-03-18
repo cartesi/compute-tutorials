@@ -33,8 +33,8 @@ docker run \
     --flash-drive="label:output,length:1<<12" \
     -- $'dd status=none if=$(flashdrive input) | lua -e \'print((string.unpack("z",  io.read("a"))))\' | bc | dd status=none of=$(flashdrive output)'
 
-# moves stored machine to a folder within $MACHINES_DIR named after the machine's hash
-mv $MACHINE_TEMP_DIR $MACHINES_DIR/$(docker run \
+# defines target directory as being within $MACHINES_DIR and named after the stored machine's hash
+MACHINE_TARGET_DIR=$MACHINES_DIR/$(docker run \
   -e USER=$(id -u -n) \
   -e GROUP=$(id -g -n) \
   -e UID=$(id -u) \
@@ -43,3 +43,9 @@ mv $MACHINE_TEMP_DIR $MACHINES_DIR/$(docker run \
   -h playground \
   -w /home/$(id -u -n) \
   --rm $CARTESI_PLAYGROUND_DOCKER cartesi-machine-stored-hash $MACHINE_TEMP_DIR/)
+
+# moves stored machine to the target directory
+if [ -d "$MACHINE_TARGET_DIR" ]; then
+  rm -r $MACHINE_TARGET_DIR
+fi
+mv $MACHINE_TEMP_DIR $MACHINE_TARGET_DIR
