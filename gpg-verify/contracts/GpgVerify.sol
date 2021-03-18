@@ -32,7 +32,7 @@ contract GpgVerify {
 
     DescartesInterface descartes;
 
-    bytes32 templateHash = 0xb119156738bc5563f01a81d642e1a8331d6a93f16ff9187123718126a333a261;
+    bytes32 templateHash = 0x2f785d9fcfc53815fbd473afead4a63685e6f48bb4b3632597b1ce6323d5c55d;
 
     // this DApp has an ext2 file-system (at 0x9000..) and two input drives (at 0xa000.. and 0xb000..), so the output will be at 0xc000..
     uint64 outputPosition = 0xc000000000000000;
