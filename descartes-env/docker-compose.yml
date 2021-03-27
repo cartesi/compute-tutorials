@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+    image: descartes-env_hardhatnet:1.1.0
     environment:
       MNEMONIC: "test test test test test test test test test test test junk"
     expose:
@@ -16,7 +17,7 @@ services:
       - ethereum
 
   alice_dispatcher:
-    image: cartesi/descartes:1.0.0
+    image: cartesi/descartes:1.1.0
     restart: always
     environment:
       MNEMONIC: "test test test test test test test test test test test junk"
@@ -85,7 +86,7 @@ services:
           - machine-manager
 
   bob_dispatcher:
-    image: cartesi/descartes:1.0.0
+    image: cartesi/descartes:1.1.0
     restart: always
     environment:
       MNEMONIC: "test test test test test test test test test test test junk"
