@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CARTESI_IPFS_DOCKER=cartesi/ipfs-server:0.2.0
+CARTESI_PLAYGROUND_DOCKER=cartesi/playground:0.3.0
 
 if [ ! $2 ]; then
   echo "2 parameters required: file and tree size"
@@ -15,7 +15,7 @@ merkle=$(docker run --rm \
   -v `pwd`:/home/$(id -u -n) \
   -w /home/$(id -u -n) \
   --entrypoint "/opt/cartesi/bin/merkle-tree-hash" \
-  $CARTESI_IPFS_DOCKER \
+  $CARTESI_PLAYGROUND_DOCKER \
   --input=$1 --page-log2-size=$2 --tree-log2-size=$2)
 
 echo $merkle
