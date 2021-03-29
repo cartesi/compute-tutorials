@@ -3,7 +3,7 @@
   "description": "Descartes environment for local DApp development",
   "version": "1.1.0",
   "dependencies": {
-    "@cartesi/descartes-sdk": "^1.1.0"
+    "@cartesi/descartes-sdk": "^1.1.1"
   },
   "devDependencies": {
     "ethers": "^5.0.24",
