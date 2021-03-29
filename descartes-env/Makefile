@@ -1,6 +1,6 @@
 .PHONY: start stop clean release
 
-TAG := 1.1.1
+TAG := 1.1.0
 
 start: stop
 	docker-compose up
