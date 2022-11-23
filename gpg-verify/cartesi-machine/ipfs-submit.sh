@@ -5,7 +5,7 @@ if [ ! $1 ]; then
   exit 1
 fi
 
-output=$(curl -X POST -s -F file=@$1 "https://ipfs.infura.io:5001/api/v0/add?pin=true")
+output=$(curl -X POST -s -F file=@$1 "http://localhost:5008/api/v0/add?pin=true")
 
 # searches for string 'Hash":"', after which comes the desired 46-char IPFS hash value
 output=${output#*Hash\":\"}

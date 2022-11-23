@@ -1,5 +1,5 @@
 #!/bin/bash
-CARTESI_PLAYGROUND_DOCKER=cartesi/playground:0.3.0
+CARTESI_PLAYGROUND_DOCKER=cartesi/playground:0.5.0
 
 # uses playground to build and package the scrypt-hash application for the Cartesi Machine
 # - compiles "scrypt-hash" application, linking it to "libscrypt" (which should have been previously built)

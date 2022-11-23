@@ -1,8 +1,8 @@
 # Generic Script Tutorial
 
-This tutorial defines a DApp capable of running an arbitrary script using Descartes.
+This tutorial defines a DApp capable of running an arbitrary script using Cartesi Compute.
 
-> **DISCLAIMER**: this is **NOT** the recommended way of implementing a DApp using Descartes. It usually makes no sense to waste resources building a full script on-chain - all possible logic should rather be moved into the off-chain Cartesi Machine. However, this strategy is used here for the purposes of illustrating the potential of Descartes, so as to avoid the need of building a different machine for every script we want to exercise.
+> **DISCLAIMER**: this is **NOT** the recommended way of implementing a DApp using Cartesi Compute. It usually makes no sense to waste resources building a full script on-chain - all possible logic should rather be moved into the off-chain Cartesi Machine. However, this strategy is used here for the purposes of illustrating the potential of Cartesi Compute, so as to avoid the need of building a different machine for every script we want to exercise.
 
 ## Usage
 

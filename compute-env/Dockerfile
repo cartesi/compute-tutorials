@@ -1,6 +1,6 @@
-FROM node:14-alpine
+FROM node:16-alpine3.14
 
-RUN apk add --no-cache git
+RUN apk add --no-cache git python3 make musl-dev gcc g++
 
 ENV BASE /opt/cartesi
 

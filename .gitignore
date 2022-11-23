@@ -5,4 +5,5 @@ deployments/
 .vscode/
 .viminfo
 .bash_history
-descartes-env*.tar.gz
+compute-env*.tar.gz
+*~

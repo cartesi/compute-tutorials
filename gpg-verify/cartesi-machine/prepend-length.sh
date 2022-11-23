@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CARTESI_PLAYGROUND_DOCKER=cartesi/playground:0.3.0
+CARTESI_PLAYGROUND_DOCKER=cartesi/playground:0.5.0
 
 if [ ! $1 ]; then
   echo "1 parameter required: file"

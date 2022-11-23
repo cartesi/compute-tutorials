@@ -25,14 +25,14 @@
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-import "@cartesi/descartes-sdk/contracts/DescartesInterface.sol";
+import "@cartesi/compute-sdk/contracts/CartesiComputeInterface.sol";
 
 
 contract GenericScript {
 
-    DescartesInterface descartes;
+    CartesiComputeInterface cartesiCompute;
 
-    bytes32 templateHash = 0xb20cc59994cfd21b21ebb07234d8d4b5016efa60d53854198b3e088b310eb5c0;
+    bytes32 templateHash = 0x91e6e7408c24844a3b58cc6d5310a49f10882100a937d14cecd3c54bfe573353;
     uint64 outputPosition = 0xa000000000000000;
     uint8 outputLog2Size = 10;
     uint256 finalTime = 1e11;
@@ -53,15 +53,15 @@ contract GenericScript {
     // defines script size as 1024 bytes
     uint8 scriptLog2Size = 10;
 
-    constructor(address descartesAddress) {
-        descartes = DescartesInterface(descartesAddress);
+    constructor(address cartesiComputeAddress) {
+        cartesiCompute = CartesiComputeInterface(cartesiComputeAddress);
     }
 
     function instantiate(address[] memory parties) public returns (uint256) {
 
         // specifies an input drive containing the script
-        DescartesInterface.Drive[] memory drives = new DescartesInterface.Drive[](1);
-        drives[0] = DescartesInterface.Drive(
+        CartesiComputeInterface.Drive[] memory drives = new CartesiComputeInterface.Drive[](1);
+        drives[0] = CartesiComputeInterface.Drive(
             0x9000000000000000,    // 2nd drive position: 1st is the root file-system (0x8000..)
             scriptLog2Size,        // driveLog2Size
             script,                // directValue
@@ -73,22 +73,23 @@ contract GenericScript {
         );
 
         // instantiates the computation
-        return descartes.instantiate(
+        return cartesiCompute.instantiate(
             finalTime,
             templateHash,
             outputPosition,
             outputLog2Size,
             roundDuration,
             parties,
-            drives
+            drives,
+            false
         );
     }
 
     function getResult(uint256 index) public view returns (bool, bool, address, bytes memory) {
-        return descartes.getResult(index);
+        return cartesiCompute.getResult(index);
     }
 
     function destruct(uint256 index) public {
-        descartes.destruct(index);
+        cartesiCompute.destruct(index);
     }
 }

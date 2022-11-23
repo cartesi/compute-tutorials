@@ -25,14 +25,14 @@
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-import "@cartesi/descartes-sdk/contracts/DescartesInterface.sol";
+import "@cartesi/compute-sdk/contracts/CartesiComputeInterface.sol";
 
 
 contract DogecoinHash {
 
-    DescartesInterface descartes;
+    CartesiComputeInterface cartesiCompute;
 
-    bytes32 templateHash = 0x8e5d0621f4a4593fabb0afc1c7495cdc5f2e60410ffabcad7f414238b84f03bf;
+    bytes32 templateHash = 0xb48fa074594a537fcc7c1069fc3eeabcbbcabff6f479c08a5c12efdd73b4ca20;
 
     // this DApp has an ext2 file-system (at 0x9000..) and an input drives (at 0xa000), so the output will be at 0xb000..
     uint64 outputPosition = 0xb000000000000000;
@@ -56,8 +56,8 @@ contract DogecoinHash {
     uint8 headerDataLog2Size = 7;
 
 
-    constructor(address descartesAddress) {
-        descartes = DescartesInterface(descartesAddress);
+    constructor(address cartesiComputeAddress) {
+        cartesiCompute = CartesiComputeInterface(cartesiComputeAddress);
 
         // defines headerData by concatenating block header fields
         uint iHeader = 0;
@@ -73,8 +73,8 @@ contract DogecoinHash {
     function instantiate(address[] memory parties) public returns (uint256) {
 
         // specifies an input drive with the header data to be hashed using scrypt
-        DescartesInterface.Drive[] memory drives = new DescartesInterface.Drive[](1);
-        drives[0] = DescartesInterface.Drive(
+        CartesiComputeInterface.Drive[] memory drives = new CartesiComputeInterface.Drive[](1);
+        drives[0] = CartesiComputeInterface.Drive(
             0xa000000000000000,    // 3rd drive position: 1st is the root file-system (0x8000..), 2nd is the mounted ext2 filesystem (0x9000..)
             headerDataLog2Size,    // driveLog2Size
             headerData,            // directValue
@@ -82,26 +82,28 @@ contract DogecoinHash {
             0x00,                  // loggerRootHash
             parties[0],            // provider
             false,                 // waitsProvider
-            false                  // needsLogger
+            false,                  // needsLogger
+            false                   // downloadAsCor
         );
 
         // instantiates the computation
-        return descartes.instantiate(
+        return cartesiCompute.instantiate(
             finalTime,
             templateHash,
             outputPosition,
             outputLog2Size,
             roundDuration,
             parties,
-            drives
+            drives,
+            false
         );
     }
 
     function getResult(uint256 index) public view returns (bool, bool, address, bytes memory) {
-        return descartes.getResult(index);
+        return cartesiCompute.getResult(index);
     }
 
     function destruct(uint256 index) public {
-        descartes.destruct(index);
+        cartesiCompute.destruct(index);
     }
 }

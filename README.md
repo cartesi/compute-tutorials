@@ -1,6 +1,6 @@
-# Descartes SDK Tutorials
+# Cartesi Compute SDK Tutorials
 
-This project contains tutorial DApps implemented with the Descartes SDK, as documented in https://cartesi.io/docs/
+This project contains tutorial DApps implemented with the Cartesi Compute SDK, as documented in https://cartesi.io/docs/
 
 ## Getting Started
 
@@ -14,21 +14,17 @@ This project contains tutorial DApps implemented with the Descartes SDK, as docu
 ### Cloning
 
 ```
-$ git clone git@github.com:cartesi/descartes-tutorials.git
-```
-or using the http address:
-```
-$ git clone https://github.com/cartesi/descartes-tutorials.git
+$ git clone https://github.com/cartesi/compute-tutorials.git
 ```
 
 ### Environment
 
-All tutorials in this repository are designed to interact with [Descartes](https://github.com/cartesi/descartes) nodes running locally.
-Both the tutorials and the Descartes nodes are configured to interact with a local Hardhat Ethereum node running at `localhost:8545`. The environment is configured for two actors, `alice` and `bob`, each of which has an account in the Ethereum instance as well as a corresponding Descartes node.
+All tutorials in this repository are designed to interact with [Cartesi Compute](https://github.com/cartesi/compute) nodes running locally.
+Both the tutorials and the Cartesi Compute nodes are configured to interact with a local Hardhat Ethereum node running at `localhost:8545`. The environment is configured for two actors, `alice` and `bob`, each of which has an account in the Ethereum instance as well as a corresponding Cartesi Compute node.
 
 To run the entire environment, execute:
 ```bash
-$ cd descartes-env
+$ cd compute-env
 $ docker-compose up
 ```
 
@@ -49,14 +45,14 @@ To run each tutorial, first `cd` into its directory. For instance:
 $ cd helloworld
 ```
 
-Then build the DApp's Cartesi Machine and store it in an appropriate directory accessible by the Descartes nodes. To do this, execute the following:
+Then build the DApp's Cartesi Machine and store it in an appropriate directory accessible by the Cartesi Compute nodes. To do this, execute the following:
 ```bash
 $ cd cartesi-machine
-$ ./build-cartesi-machine.sh ../../descartes-env/machines
+$ ./build-cartesi-machine.sh ../../compute-env/machines
 ```
 > **Note:** for some tutorials, building an appropriate machine requires a custom `rootfs.ext2` file-system drive. This process is [documented here](https://docs.cartesi.io/machine/target/linux#the-root-file-system). More specific instructions are given within each tutorial.
 
-Install, compile and deploy the DApp's smart contract to the local `hardhat` node (which is the same instance used by the Descartes services):
+Install, compile and deploy the DApp's smart contract to the local `hardhat` node (which is the same instance used by the Cartesi Compute services):
 ```bash
 $ yarn
 $ npx hardhat deploy --network localhost
@@ -110,14 +106,14 @@ $ mkdir mydapp
 $ cd mydapp
 ```
 
-Add project dependencies. Besides Descartes itself, we recommend deploying the smart contracts using Hardhat and Ethers, as well as using Typescript in configuration files and scripts:
+Add project dependencies. Besides Cartesi Compute itself, we recommend deploying the smart contracts using Hardhat and Ethers, as well as using Typescript in configuration files and scripts:
 ```bash
-$ yarn add @cartesi/descartes-sdk
+$ yarn add @cartesi/compute-sdk
 $ yarn add ethers hardhat hardhat-deploy hardhat-deploy-ethers --dev
 $ yarn add typescript ts-node --dev
 ```
 
-Create a `hardhat.config.ts` file that specifies the dependency on `@cartesi/descartes-sdk` artifacts and deployment scripts, as well as the usage of the Descartes Environment's Ethereum instance running on `localhost:8545`. It is also recommended to define a `deployer` named account to use when deploying the contracts:
+Create a `hardhat.config.ts` file that specifies the dependency on `@cartesi/compute-sdk` artifacts and deployment scripts, as well as the usage of the Cartesi Compute Environment's Ethereum instance running on `localhost:8545`. It is also recommended to define a `deployer` named account to use when deploying the contracts:
 ```javascript
 import { HardhatUserConfig } from "hardhat/config";
 
@@ -136,12 +132,12 @@ const config: HardhatUserConfig = {
   external: {
     contracts: [
       {
-        artifacts: "node_modules/@cartesi/descartes-sdk/export/artifacts",
-        deploy: "node_modules/@cartesi/descartes-sdk/dist/deploy",
+        artifacts: "node_modules/@cartesi/compute-sdk/export/artifacts",
+        deploy: "node_modules/@cartesi/compute-sdk/dist/deploy",
       },
     ],
     deployments: {
-      localhost: ["../descartes-env/deployments/localhost"],
+      localhost: ["../compute-env/deployments/localhost"],
     },
   },
   namedAccounts: {
@@ -154,24 +150,24 @@ const config: HardhatUserConfig = {
 export default config;
 ```
 
-Create the smart contract for the DApp in `./contracts` (e.g., `./contracts/MyDapp.sol`). It should import `DescartesInterface` to be able to use the Descartes contract:
+Create the smart contract for the DApp in `./contracts` (e.g., `./contracts/MyDapp.sol`). It should import `CartesiComputeInterface` to be able to use the Cartesi Compute contract:
 ```javascript
 // SPDX-License-Identifier: GPL-3.0-only
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-import "@cartesi/descartes-sdk/contracts/DescartesInterface.sol";
+import "@cartesi/compute-sdk/contracts/CartesiComputeInterface.sol";
 
 contract MyDapp {
-    DescartesInterface descartes;
+    CartesiComputeInterface compute;
 
-    constructor(address descartesAddress) {
-        descartes = DescartesInterface(descartesAddress);
+    constructor(address cartesicomputeAddress) {
+        compute = CartesiComputeInterface(cartesicomputeAddress);
     }
 }
 ```
 
-Create a deploy script `./deploy/01_contracts.ts` to publish the DApp smart contract linked to the deployed Descartes smart contract:
+Create a deploy script `./deploy/01_contracts.ts` to publish the DApp smart contract linked to the deployed Cartesi Compute smart contract:
 ```javascript
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
@@ -181,11 +177,11 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const { deploy, get } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  const Descartes = await get("Descartes");
+  const Compute = await get("CartesiCompute");
   await deploy("MyDapp", {
     from: deployer,
     log: true,
-    args: [Descartes.address],
+    args: [Compute.address],
   });
 };
 
@@ -198,59 +194,59 @@ $ npx hardhat deploy --network localhost
 ```
 
 
-## Using a local Descartes build (optional)
+## Using a local Cartesi Compute build (optional)
 
-In order to run these tutorials with a local build of the [Descartes project](https://github.com/cartesi/descartes), first of all clone that repository, making sure to include the submodules. For instance:
+In order to run these tutorials with a local build of the [Cartesi Compute project](https://github.com/cartesi/compute), first of all clone that repository, making sure to include the submodules. For instance:
 
 ```bash
 $ cd ..
-$ git clone --recurse-submodules git@github.com:cartesi/descartes.git
+$ git clone --recurse-submodules https://github.com/cartesi/compute.git
 ```
 
-Then, build the Descartes Docker image (this will take some time):
+Then, build the Cartesi Compute Docker image (this will take some time):
 
 ```bash
-$ cd descartes
-$ docker build . -t cartesi/descartes:local
+$ cd compute
+$ docker build . -t cartesi/compute:local
 ```
 
-After that, use Yarn to pack Descartes' dependencies as a gzip compressed file, and place that file inside the `descartes-env` directory within `descartes-tutorials`. For instance:
+After that, use Yarn to pack Cartesi Compute' dependencies as a gzip compressed file, and place that file inside the `compute-env` directory within `compute-tutorials`. For instance:
 
 ```bash
-$ yarn pack --filename ../descartes-tutorials/descartes-env/cartesi-descartes-sdk-local.tgz
+$ yarn pack --filename ../compute-tutorials/compute-env/cartesi-compute-sdk-local.tgz
 ```
 
-Back in the `descartes-tutorials` project, change the Docker Compose configuration used by your local Environment by editing `descartes-env/docker-compose.yml`, so that `alice`'s and `bob`'s dispatchers use the newly built Docker image:
+Back in the `compute-tutorials` project, change the Docker Compose configuration used by your local Environment by editing `compute-env/docker-compose.yml`, so that `alice`'s and `bob`'s dispatchers use the newly built Docker image:
 
 ```yml
   ...
   alice_dispatcher:
-    image: cartesi/descartes:local
+    image: cartesi/compute:local
   ...
   bob_dispatcher:
-    image: cartesi/descartes:local
+    image: cartesi/compute:local
   ...
 ```
 
-Then, `cd` into the `descartes-env` directory and use Yarn to make sure the local Descartes Environment uses the generated gzip file with Descartes' dependencies:
+Then, `cd` into the `compute-env` directory and use Yarn to make sure the local Cartesi Compute Environment uses the generated gzip file with Cartesi Compute' dependencies:
 
 ```bash
-$ cd ./descartes-env
-$ yarn add file:./cartesi-descartes-sdk-local.tgz
+$ cd ./compute-env
+$ yarn add file:./cartesi-compute-sdk-local.tgz
 ```
 
-At this point, you can clean up your Descartes Environment and redeploy it with the updated setup:
+At this point, you can clean up your Cartesi Compute Environment and redeploy it with the updated setup:
 
 ```bash
 $ docker-compose down -v
 $ docker-compose up
 ```
 
-Finally, `cd` into the tutorial project of interest, and also ensure it uses the same generated gzip file with Descartes' dependencies:
+Finally, `cd` into the tutorial project of interest, and also ensure it uses the same generated gzip file with Cartesi Compute' dependencies:
 
 ```bash
 $ cd ../<tutorial-project>
-$ yarn add file:../descartes-env/cartesi-descartes-sdk-local.tgz
+$ yarn add file:../compute-env/cartesi-compute-sdk-local.tgz
 ```
 
 ## Contributing

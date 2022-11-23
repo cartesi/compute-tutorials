@@ -21,7 +21,7 @@ docker run --rm \
   --network host \
   --entrypoint "/opt/cartesi/bin/simple-logger" \
   $CARTESI_LOGGER_DOCKER \
-  -c descartes-env/deployments/localhost/Logger.json -d . --action submit -p $DOCPATH -b $2 -t $3
+  -c compute-env/deployments/localhost/Logger.json -d . --action submit -p $DOCPATH -b $2 -t $3
 
 cp $1.submit $1.merkle
 cat $1.merkle && echo

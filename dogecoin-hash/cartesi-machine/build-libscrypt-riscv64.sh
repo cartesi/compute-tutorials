@@ -1,5 +1,5 @@
 #!/bin/bash
-CARTESI_PLAYGROUND_DOCKER=cartesi/playground:0.3.0
+CARTESI_PLAYGROUND_DOCKER=cartesi/playground:0.5.0
 
 # uses playground to build libscrypt for Cartesi Machine's RISC-V
 # - sets "CC" as "riscv64-cartesi-linux-gnu-gcc"

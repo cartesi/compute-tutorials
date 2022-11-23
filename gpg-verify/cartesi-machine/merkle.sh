@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CARTESI_PLAYGROUND_DOCKER=cartesi/playground:0.3.0
+CARTESI_PLAYGROUND_DOCKER=cartesi/playground:0.5.0
 
 if [ ! $2 ]; then
   echo "2 parameters required: file and tree size"

@@ -3,7 +3,7 @@
 # general definitions
 MACHINES_DIR=.
 MACHINE_TEMP_DIR=__temp_machine
-CARTESI_PLAYGROUND_DOCKER=cartesi/playground:0.3.0
+CARTESI_PLAYGROUND_DOCKER=cartesi/playground:0.5.0
 
 # set machines directory to specified path if provided
 if [ $1 ]; then
@@ -15,9 +15,6 @@ if [ -d "$MACHINE_TEMP_DIR" ]; then
   rm -r $MACHINE_TEMP_DIR
 fi
 
-# builds machine (running with 0 cycles)
-# - initial (template) hash is printed on screen
-# - machine is stored in temporary directory
 docker run \
   -e USER=$(id -u -n) \
   -e GROUP=$(id -g -n) \
@@ -28,6 +25,7 @@ docker run \
   --rm $CARTESI_PLAYGROUND_DOCKER cartesi-machine \
     --max-mcycle=0 \
     --initial-hash \
+    --append-rom-bootargs="single=yes" \
     --store="$MACHINE_TEMP_DIR" \
     --flash-drive="label:root,filename:rootfs-python-jwt.ext2" \
     --flash-drive="label:input,length:1<<12" \
@@ -43,7 +41,7 @@ MACHINE_TARGET_DIR=$MACHINES_DIR/$(docker run \
   -v `pwd`:/home/$(id -u -n) \
   -h playground \
   -w /home/$(id -u -n) \
-  --rm $CARTESI_PLAYGROUND_DOCKER cartesi-machine-stored-hash $MACHINE_TEMP_DIR/)
+  --rm $CARTESI_PLAYGROUND_DOCKER cartesi-machine-stored-hash $MACHINE_TEMP_DIR/ | tail -n 1)
 
 # moves stored machine to the target directory
 if [ -d "$MACHINE_TARGET_DIR" ]; then

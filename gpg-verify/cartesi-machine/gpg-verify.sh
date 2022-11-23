@@ -7,7 +7,7 @@ dd status=none if=$(flashdrive document) | lua -e 'io.write((string.unpack(">s4"
 dd status=none if=$(flashdrive signature) | lua -e 'io.write((string.unpack(">s4",  io.read("a"))))' > signature
 
 # imports public key informing that it can be trusted (0xA86D9CB964EB527E is the key's LONG id)
-gpg --trusted-key 0xA86D9CB964EB527E --import /mnt/dapp-data/descartes-pub.key
+gpg --trusted-key 0xA86D9CB964EB527E --import /mnt/dapp-data/compute-pub.key
 
 # verifies document signature
 gpg --verify signature document

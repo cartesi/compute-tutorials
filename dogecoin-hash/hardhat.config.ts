@@ -15,12 +15,12 @@ const config: HardhatUserConfig = {
   external: {
     contracts: [
       {
-        artifacts: "node_modules/@cartesi/descartes-sdk/export/artifacts",
-        deploy: "node_modules/@cartesi/descartes-sdk/dist/deploy",
+        artifacts: "node_modules/@cartesi/compute-sdk/export/artifacts",
+        deploy: "node_modules/@cartesi/compute-sdk/dist/deploy",
       },
     ],
     deployments: {
-      localhost: ["../descartes-env/deployments/localhost"],
+      localhost: ["../compute-env/deployments/localhost"],
     },
   },
   namedAccounts: {
@@ -42,7 +42,7 @@ const config: HardhatUserConfig = {
 task("instantiate", "Instantiate a DogecoinHash computation").setAction(
   async ({}, hre) => {
     const { ethers } = hre;
-    const descartes = await ethers.getContract("Descartes");
+    const cartesiCompute = await ethers.getContract("CartesiCompute");
     const contract = await ethers.getContract("DogecoinHash");
 
     const { alice, bob } = await hre.getNamedAccounts();
@@ -51,7 +51,7 @@ task("instantiate", "Instantiate a DogecoinHash computation").setAction(
 
     // retrieves created computation's index
     const index = await new Promise((resolve) => {
-      descartes.on("DescartesCreated", (index) => resolve(index));
+      cartesiCompute.on("CartesiComputeCreated", (index) => resolve(index));
     });
 
     console.log(

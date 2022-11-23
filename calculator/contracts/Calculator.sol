@@ -25,14 +25,14 @@
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-import "@cartesi/descartes-sdk/contracts/DescartesInterface.sol";
+import "@cartesi/compute-sdk/contracts/CartesiComputeInterface.sol";
 
 
 contract Calculator {
 
-    DescartesInterface descartes;
-
-    bytes32 templateHash = 0xa278371ed8d52efa6aba9f825ba8130d2604b363b3ceb51c1bd3a210f400fd8a;
+    CartesiComputeInterface cartesiCompute;
+    
+    bytes32 templateHash = 0x9e2918f0cf6ef9d8c9281e4d865f56e9a5cc9d3bef4e254c3483edd9cdb25df0;
     uint64 outputPosition = 0xa000000000000000;
     uint8 outputLog2Size = 10;
     uint256 finalTime = 1e11;
@@ -42,15 +42,15 @@ contract Calculator {
     bytes expression = "2^71 + 36^12";
     uint8 expressionLog2Size = 5;
 
-    constructor(address descartesAddress) {
-        descartes = DescartesInterface(descartesAddress);
+    constructor(address cartesiComputeAddress) {
+        cartesiCompute = CartesiComputeInterface(cartesiComputeAddress);
     }
 
     function instantiate(address[] memory parties) public returns (uint256) {
 
         // specifies an input drive containing the mathematical expression
-        DescartesInterface.Drive[] memory drives = new DescartesInterface.Drive[](1);
-        drives[0] = DescartesInterface.Drive(
+        CartesiComputeInterface.Drive[] memory drives = new CartesiComputeInterface.Drive[](1);
+        drives[0] = CartesiComputeInterface.Drive(
             0x9000000000000000,    // 2nd drive position: 1st is the root file-system (0x8000..)
             expressionLog2Size,    // driveLog2Size
             expression,            // directValue
@@ -58,26 +58,28 @@ contract Calculator {
             0x00,                  // loggerRootHash
             parties[0],            // provider
             false,                 // waitsProvider
-            false                  // needsLogger
+            false,                  // needsLogger
+            false                  // downloadAsCar
         );
 
         // instantiates the computation
-        return descartes.instantiate(
+        return cartesiCompute.instantiate(
             finalTime,
             templateHash,
             outputPosition,
             outputLog2Size,
             roundDuration,
             parties,
-            drives
+            drives,
+            false
         );
     }
 
     function getResult(uint256 index) public view returns (bool, bool, address, bytes memory) {
-        return descartes.getResult(index);
+        return cartesiCompute.getResult(index);
     }
 
     function destruct(uint256 index) public {
-        descartes.destruct(index);
+        cartesiCompute.destruct(index);
     }
 }

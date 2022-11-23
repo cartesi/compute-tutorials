@@ -25,14 +25,14 @@
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-import "@cartesi/descartes-sdk/contracts/DescartesInterface.sol";
+import "@cartesi/compute-sdk/contracts/CartesiComputeInterface.sol";
 
 
 contract GpgVerify {
 
-    DescartesInterface descartes;
+    CartesiComputeInterface cartesiCompute;
 
-    bytes32 templateHash = 0x2f785d9fcfc53815fbd473afead4a63685e6f48bb4b3632597b1ce6323d5c55d;
+    bytes32 templateHash = 0x6ed9c0c7a84bdce6cdc42018d2d43af391382b441d1f9b5de23bb518f3f76809;
 
     // this DApp has an ext2 file-system (at 0x9000..) and two input drives (at 0xa000.. and 0xb000..), so the output will be at 0xc000..
     uint64 outputPosition = 0xc000000000000000;
@@ -60,8 +60,8 @@ contract GpgVerify {
     bytes documentData = new bytes(1024);
     bytes signatureData = new bytes(1024);
 
-    constructor(address descartesAddress) {
-        descartes = DescartesInterface(descartesAddress);
+    constructor(address cartesiComputeAddress) {
+        cartesiCompute = CartesiComputeInterface(cartesiComputeAddress);
 
         // prepares data: computation expects input data to be prepended by four bytes that encode the length of the content
         prependDataWithContentLength(document, documentData);
@@ -88,8 +88,8 @@ contract GpgVerify {
     function instantiate(address[] memory parties) public returns (uint256) {
 
         // specifies two input drives containing the document and the signature
-        DescartesInterface.Drive[] memory drives = new DescartesInterface.Drive[](2);
-        drives[0] = DescartesInterface.Drive(
+        CartesiComputeInterface.Drive[] memory drives = new CartesiComputeInterface.Drive[](2);
+        drives[0] = CartesiComputeInterface.Drive(
             0xa000000000000000,    // 3rd drive position: 1st is the root file-system (0x8000..), 2nd is the dapp-data file-system (0x9000..)
             10,                    // driveLog2Size
             documentData,          // directValue
@@ -97,9 +97,10 @@ contract GpgVerify {
             0x00,                  // loggerRootHash
             parties[0],            // provider
             false,                 // waitsProvider
-            false                  // needsLogger
+            false,                  // needsLogger
+            false                   //downloadAsCar
         );
-        drives[1] = DescartesInterface.Drive(
+        drives[1] = CartesiComputeInterface.Drive(
             0xb000000000000000,    // 4th drive position
             10,                    // driveLog2Size
             signatureData,         // directValue
@@ -107,18 +108,20 @@ contract GpgVerify {
             0x00,                  // loggerRootHash
             parties[0],            // provider
             false,                 // waitsProvider
-            false                  // needsLogger
+            false,                  // needsLogger
+            false                   //downloadAsCor
         );
 
         // instantiates the computation
-        return descartes.instantiate(
+        return cartesiCompute.instantiate(
             finalTime,
             templateHash,
             outputPosition,
             outputLog2Size,
             roundDuration,
             parties,
-            drives
+            drives,
+            false
         );
     }
 
@@ -134,8 +137,8 @@ contract GpgVerify {
         returns (uint256)
     {
         // specifies two input drives containing the document and the signature
-        DescartesInterface.Drive[] memory drives = new DescartesInterface.Drive[](2);
-        drives[0] = DescartesInterface.Drive(
+        CartesiComputeInterface.Drive[] memory drives = new CartesiComputeInterface.Drive[](2);
+        drives[0] = CartesiComputeInterface.Drive(
             0xa000000000000000,    // 3rd drive position: 1st is the root file-system (0x8000..), 2nd is the dapp-data file-system (0x9000..)
             documentLog2Size,      // driveLog2Size
             "",                    // directValue
@@ -143,9 +146,10 @@ contract GpgVerify {
             documentRootHash,      // loggerRootHash
             parties[0],            // provider
             false,                 // waitsProvider
-            true                   // needsLogger
+            true,                   // needsLogger
+            false                  // downloadAsCor
         );
-        drives[1] = DescartesInterface.Drive(
+        drives[1] = CartesiComputeInterface.Drive(
             0xb000000000000000,    // 4th drive position
             signatureLog2Size,     // driveLog2Size
             "",                    // directValue
@@ -153,26 +157,29 @@ contract GpgVerify {
             signatureRootHash,     // loggerRootHash
             parties[0],            // provider
             false,                 // waitsProvider
-            true                   // needsLogger
+            true,                   // needsLogger
+            false                  // downloadAsCor
         );
 
         // instantiates the computation
-        return descartes.instantiate(
+        return cartesiCompute.instantiate(
             finalTime,
             templateHash,
             outputPosition,
             outputLog2Size,
             roundDuration,
             parties,
-            drives
+            drives,
+            false
         );
     }
 
     function getResult(uint256 index) public view returns (bool, bool, address, bytes memory) {
-        return descartes.getResult(index);
+        return cartesiCompute.getResult(index);
     }
 
     function destruct(uint256 index) public {
-        descartes.destruct(index);
+        cartesiCompute.destruct(index);
     }
 }
+

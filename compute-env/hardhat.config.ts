@@ -11,6 +11,16 @@ const config: HardhatUserConfig = {
     localhost: {
       url: "http://localhost:8545",
       accounts: mnemonic ? { mnemonic } : undefined,
+      mining: {
+        auto: false,
+        interval: 5000
+      }
+    },
+    hardhat: {
+      mining: {
+        auto: true,
+        interval: 5000
+      }
     },
   },
   solidity: {
@@ -36,8 +46,8 @@ const config: HardhatUserConfig = {
           "node_modules/@cartesi/machine-solidity-step/export/artifacts",
       },
       {
-        deploy: "node_modules/@cartesi/descartes-sdk/dist/deploy",
-        artifacts: "node_modules/@cartesi/descartes-sdk/export/artifacts",
+        deploy: "node_modules/@cartesi/compute-sdk/dist/deploy",
+        artifacts: "node_modules/@cartesi/compute-sdk/export/artifacts",
       },
     ],
   },

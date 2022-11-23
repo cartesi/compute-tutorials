@@ -1,6 +1,6 @@
 .PHONY: start stop clean release
 
-TAG := 1.1.0
+TAG := 1.3.0
 
 start: stop
 	docker-compose up
@@ -16,4 +16,4 @@ clean:
 	sudo rm -rf bob_data/*
 
 release: clean
-	cd .. && tar -czvf descartes-env-${TAG}.tar.gz descartes-env
+	cd .. && tar -czvf compute-env-${TAG}.tar.gz compute-env

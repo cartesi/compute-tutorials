@@ -6,11 +6,11 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const { deploy, get } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  const Descartes = await get("Descartes");
+  const CartesiCompute = await get("CartesiCompute");
   await deploy("HelloWorld", {
     from: deployer,
     log: true,
-    args: [Descartes.address],
+    args: [CartesiCompute.address],
   });
 };
 
