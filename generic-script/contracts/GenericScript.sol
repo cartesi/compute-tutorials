@@ -69,7 +69,8 @@ contract GenericScript {
             0x00,                  // loggerRootHash
             parties[0],            // provider
             false,                 // waitsProvider
-            false                  // needsLogger
+            false,                 // needsLogger
+            false                  // downloadAsCAR
         );
 
         // instantiates the computation
