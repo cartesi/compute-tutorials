@@ -32,7 +32,7 @@ contract GpgVerify {
 
     CartesiComputeInterface cartesiCompute;
 
-    bytes32 templateHash = 0x6ed9c0c7a84bdce6cdc42018d2d43af391382b441d1f9b5de23bb518f3f76809;
+    bytes32 templateHash = 0xb5907eafa8a2c0f43249afcef27d207785e427ca4a1d7db8a4a05c7f1b7e1df5;
 
     // this DApp has an ext2 file-system (at 0x9000..) and two input drives (at 0xa000.. and 0xb000..), so the output will be at 0xc000..
     uint64 outputPosition = 0xc000000000000000;
