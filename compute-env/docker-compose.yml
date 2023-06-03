@@ -165,7 +165,7 @@ services:
           - logger
 
   bob_ipfs:
-    image: cartesi/ipfs-server:0.3.0		
+    image: cartesi/ipfs-server:0.3.0
     volumes:
       - ./bob_data:/opt/cartesi/srv/compute/flashdrive
     networks:
@@ -173,7 +173,7 @@ services:
       bob:
         aliases:
           - ipfs
-    ports:	
+    ports:
         - "50052:50051"
     command: ["-g", "http://bob_kubo:5001"]
 
@@ -201,7 +201,7 @@ services:
       ]
     environment:
       IPFS_PROFILE: "server"
-    networks: 
+    networks:
       ipfs:
         aliases:
           - bob_kubo
