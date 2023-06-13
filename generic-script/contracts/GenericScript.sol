@@ -32,7 +32,7 @@ contract GenericScript {
 
     CartesiComputeInterface cartesiCompute;
 
-    bytes32 templateHash = 0x4caa1154d98668b6114802c6aef70db8f2d32a32b8d79a328737f99c98bdc674;
+    bytes32 templateHash = 0x385e6518c18d4d40a00b4916d5cd6bc3e7ab5663c9ae13facd646d3a379f39da;
     uint64 outputPosition = 0xa0000000000000;
     uint8 outputLog2Size = 10;
     uint256 finalTime = 1e11;

@@ -32,7 +32,7 @@ contract DogecoinHash {
 
     CartesiComputeInterface cartesiCompute;
 
-    bytes32 templateHash = 0xb48fa074594a537fcc7c1069fc3eeabcbbcabff6f479c08a5c12efdd73b4ca20;
+    bytes32 templateHash = 0xde193cf5385625629d9085746373ac7cc6f5b6fbe3fa8bcd1ca9b1b09c2ddaa5;
 
     // this DApp has an ext2 file-system (at 0x9000..) and an input drives (at 0xa000), so the output will be at 0xb000..
     uint64 outputPosition = 0xb0000000000000;

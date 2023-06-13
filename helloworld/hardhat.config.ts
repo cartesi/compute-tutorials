@@ -13,12 +13,6 @@ const config: HardhatUserConfig = {
     version: "0.7.4",
   },
   external: {
-    contracts: [
-      {
-        artifacts: "node_modules/@cartesi/compute-sdk/export/artifacts",
-        deploy: "node_modules/@cartesi/compute-sdk/dist/deploy",
-      },
-    ],
     deployments: {
       localhost: ["../compute-env/deployments/localhost"],
     },

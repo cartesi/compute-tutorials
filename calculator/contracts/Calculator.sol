@@ -32,7 +32,7 @@ contract Calculator {
 
     CartesiComputeInterface cartesiCompute;
     
-    bytes32 templateHash = 0x9e2918f0cf6ef9d8c9281e4d865f56e9a5cc9d3bef4e254c3483edd9cdb25df0;
+    bytes32 templateHash = 0x21f5756506a2f3cc0f4c4691b560d3821922a00414f8ce99d8f38e9d14ed3e46;
     uint64 outputPosition = 0xa0000000000000;
     uint8 outputLog2Size = 10;
     uint256 finalTime = 1e11;
