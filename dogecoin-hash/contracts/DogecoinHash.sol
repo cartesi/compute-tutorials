@@ -35,7 +35,7 @@ contract DogecoinHash {
     bytes32 templateHash = 0xb48fa074594a537fcc7c1069fc3eeabcbbcabff6f479c08a5c12efdd73b4ca20;
 
     // this DApp has an ext2 file-system (at 0x9000..) and an input drives (at 0xa000), so the output will be at 0xb000..
-    uint64 outputPosition = 0xb000000000000000;
+    uint64 outputPosition = 0xb0000000000000;
     // output hash has 32 bytes
     uint8 outputLog2Size = 5;
 
@@ -75,7 +75,7 @@ contract DogecoinHash {
         // specifies an input drive with the header data to be hashed using scrypt
         CartesiComputeInterface.Drive[] memory drives = new CartesiComputeInterface.Drive[](1);
         drives[0] = CartesiComputeInterface.Drive(
-            0xa000000000000000,    // 3rd drive position: 1st is the root file-system (0x8000..), 2nd is the mounted ext2 filesystem (0x9000..)
+            0xa0000000000000,    // 3rd drive position: 1st is the root file-system (0x8000..), 2nd is the mounted ext2 filesystem (0x9000..)
             headerDataLog2Size,    // driveLog2Size
             headerData,            // directValue
             "",                    // loggerIpfsPath

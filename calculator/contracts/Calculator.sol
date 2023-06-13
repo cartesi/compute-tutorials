@@ -33,7 +33,7 @@ contract Calculator {
     CartesiComputeInterface cartesiCompute;
     
     bytes32 templateHash = 0x9e2918f0cf6ef9d8c9281e4d865f56e9a5cc9d3bef4e254c3483edd9cdb25df0;
-    uint64 outputPosition = 0xa000000000000000;
+    uint64 outputPosition = 0xa0000000000000;
     uint8 outputLog2Size = 10;
     uint256 finalTime = 1e11;
     uint256 roundDuration = 51;
@@ -51,7 +51,7 @@ contract Calculator {
         // specifies an input drive containing the mathematical expression
         CartesiComputeInterface.Drive[] memory drives = new CartesiComputeInterface.Drive[](1);
         drives[0] = CartesiComputeInterface.Drive(
-            0x9000000000000000,    // 2nd drive position: 1st is the root file-system (0x8000..)
+            0x90000000000000,    // 2nd drive position: 1st is the root file-system (0x8000..)
             expressionLog2Size,    // driveLog2Size
             expression,            // directValue
             "",                    // loggerIpfsPath

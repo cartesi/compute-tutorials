@@ -32,7 +32,7 @@ contract HelloWorld {
     CartesiComputeInterface cartesiCompute;
 
     bytes32 templateHash = 0xe2809d82cbec43a4be2280cadeb89b981d738685a754422e69d318560062a3ad;
-    uint64 outputPosition = 0x9000000000000000;
+    uint64 outputPosition = 0x90000000000000;
     uint8 outputLog2Size = 5;
     uint256 finalTime = 1e11;
     uint256 roundDuration = 51;

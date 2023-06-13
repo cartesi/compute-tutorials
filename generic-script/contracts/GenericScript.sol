@@ -33,7 +33,7 @@ contract GenericScript {
     CartesiComputeInterface cartesiCompute;
 
     bytes32 templateHash = 0x4caa1154d98668b6114802c6aef70db8f2d32a32b8d79a328737f99c98bdc674;
-    uint64 outputPosition = 0xa000000000000000;
+    uint64 outputPosition = 0xa0000000000000;
     uint8 outputLog2Size = 10;
     uint256 finalTime = 1e11;
     uint256 roundDuration = 51;
@@ -62,7 +62,7 @@ contract GenericScript {
         // specifies an input drive containing the script
         CartesiComputeInterface.Drive[] memory drives = new CartesiComputeInterface.Drive[](1);
         drives[0] = CartesiComputeInterface.Drive(
-            0x9000000000000000,    // 2nd drive position: 1st is the root file-system (0x8000..)
+            0x90000000000000,    // 2nd drive position: 1st is the root file-system (0x8000..)
             scriptLog2Size,        // driveLog2Size
             script,                // directValue
             "",                    // loggerIpfsPath

@@ -139,7 +139,7 @@ contract GpgVerify {
         // specifies two input drives containing the document and the signature
         CartesiComputeInterface.Drive[] memory drives = new CartesiComputeInterface.Drive[](2);
         drives[0] = CartesiComputeInterface.Drive(
-            0xa000000000000000,    // 3rd drive position: 1st is the root file-system (0x8000..), 2nd is the dapp-data file-system (0x9000..)
+            0xa0000000000000,    // 3rd drive position: 1st is the root file-system (0x8000..), 2nd is the dapp-data file-system (0x9000..)
             documentLog2Size,      // driveLog2Size
             "",                    // directValue
             documentIpfsPath,      // loggerIpfsPath
@@ -150,7 +150,7 @@ contract GpgVerify {
             false                  // downloadAsCor
         );
         drives[1] = CartesiComputeInterface.Drive(
-            0xb000000000000000,    // 4th drive position
+            0xb0000000000000,    // 4th drive position
             signatureLog2Size,     // driveLog2Size
             "",                    // directValue
             signatureIpfsPath,     // loggerIpfsPath
